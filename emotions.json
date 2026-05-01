@@ -438,7 +438,7 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "High",
-    "description": "A sense of comfortable conviviality and contentment; a cozy, shared social atmosphere[cite: 2]."
+    "description": "Danish for warm, welcoming, and easy to be around—English lands on cozy, nice, or comfy without much loss. Listicles inflate it; culturally it also names a hospitable social tone (e.g. open doors), but it is not magic untranslatability."
   },
   {
     "term": "Acedia",
@@ -452,11 +452,11 @@
   {
     "term": "Mono no aware",
     "origin": "Japanese",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "Neutral (Bittersweet)",
-    "description": "The pathos of things; a deep awareness of the transience of all things and a gentle sadness at their passing[cite: 61]."
+    "description": "Pathos of impermanence—the Japanese noun aware (哀れ) names the sting of beauty that fades; mono no aware widens it to things and moments passing. Philosophers sometimes gloss the mood simply as pathos or bittersweetness, not a unique semantic hole in English[cite: 61]."
   },
   {
     "term": "L’appel du vide",
@@ -470,11 +470,11 @@
   {
     "term": "Saudade",
     "origin": "Portuguese",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Medium",
     "energy": "Low",
     "pleasantness": "Low/High (Conflicted)",
-    "description": "A deep emotional state of nostalgic or profound melancholic longing for an absent something or someone that one cares for and loves."
+    "description": "Melancholic longing for an absent person, place, or era—Manuel de Melo: “a pleasure you suffer, an ailment you enjoy.” Overlaps with nostalgia; what’s “untranslatable” is often its weight in Lusophone literature and music, not the lack of an English gloss."
   },
   {
     "term": "Age-man",
@@ -519,7 +519,7 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "High",
-    "description": "The enlightened feeling of being alone in the woods; a connection to nature and solitude[cite: 54, 61]."
+    "description": "Forest-solitude: Romantic-era coinage (e.g. Ludwig Tieck) for feeling alone in the woods yet tethered to nature—transparent German compounding, much like English “forest-solitude” with a hyphen[cite: 54, 61]."
   },
   {
     "term": "Mudita",
@@ -533,7 +533,7 @@
   {
     "term": "Wabi-sabi",
     "origin": "Japanese",
-    "category": "Sadness/Contentment",
+    "category": "Bittersweet peace",
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "Neutral/High",
@@ -542,7 +542,7 @@
   {
     "term": "Hiraeth",
     "origin": "Welsh",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Intense",
     "energy": "Low",
     "pleasantness": "Low",
@@ -3503,20 +3503,20 @@
   {
     "term": "Toska",
     "origin": "Russian",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Intense",
     "energy": "Variable",
     "pleasantness": "Low",
-    "description": "Vladimir Nabokov: spiritual anguish or a dull ache of the soul—a longing with nothing to long for, nostalgia, or lovesickness at different depths (often bundled as “untranslatable”)."
+    "description": "Nabokov’s Russian shade-chart: at worst nameless spiritual ache; often a dull soul-ache or longing without object; sliding into ennui. English still nudges close with ache, anguish, wistfulness, homesickness of the spirit—“untranslatable” is overstated; it’s lexical packing, not a thoughts-you-cannot-think problem."
   },
   {
     "term": "Mamihlapinatapei",
-    "origin": "Yaghan (Tierra del Fuego)",
+    "origin": "Yaghan (Yagán; Tierra del Fuego)",
     "category": "Social Connection",
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "Neutral (Bittersweet)",
-    "description": "A meaningful look between two people who both want to initiate something but neither will start first; wordless mutual hesitation (widely cited from Yaghan)."
+    "description": "The wordless, meaningful look two people share when each wants the other to begin something and neither will—shared reluctance and invitation at once (Yaghan of Tierra del Fuego; often spelled Mamihlapinatapai in English lists)."
   },
   {
     "term": "Jayus",
@@ -3525,16 +3525,16 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "High",
-    "description": "A joke so poorly told or unfunny that listeners can’t help but laugh anyway."
+    "description": "A joke told so badly it’s almost painful—yet people laugh anyway out of pity, absurdity, or affection."
   },
   {
     "term": "Litost",
     "origin": "Czech",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Intense",
     "energy": "Low",
     "pleasantness": "Very Low",
-    "description": "Milan Kundera used this for torment on suddenly seeing one’s own misery or disadvantage (anguish tinged with self-pity)."
+    "description": "Kundera (also spelled lítost): torment on suddenly seeing your own misery. English clusters near self-pity, shame, regret, remorse, anguish—“no equivalent” ignores overlapping labels; it’s a lexical-field split, not a void."
   },
   {
     "term": "Tartle",
@@ -3543,7 +3543,7 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "Low",
-    "description": "Hesitation when introducing someone because you have momentarily forgotten their name."
+    "description": "That panicky half-beat before you must introduce someone—or say hello—while their name hangs just out of reach (Scots)."
   },
   {
     "term": "Cafuné",
@@ -3552,7 +3552,7 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "High",
-    "description": "Tenderly running your fingers through someone’s hair; intimate affectionate touch."
+    "description": "Running your fingers through a lover’s hair—slow, tender affection (Brazilian Portuguese; English lists often spell cafune without the accent)."
   },
   {
     "term": "Torschlusspanik",
@@ -3570,16 +3570,16 @@
     "intensity": "Medium",
     "energy": "Medium",
     "pleasantness": "Neutral",
-    "description": "Disorientation or strangeness from not being in one’s home country; feeling out-of-place abroad."
+    "description": "The strangeness of not being in your own country—where everything is almost familiar yet subtly wrong (disorientation of abroad)."
   },
   {
     "term": "Ya'aburnee",
     "origin": "Arabic",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Intense",
     "energy": "Medium",
     "pleasantness": "Low/High (Conflicted)",
-    "description": "Literally “you bury me”—expressing a wish to die before the beloved because living without them would be unbearable."
+    "description": "Arabic romantic hyperbole: the hope or vow that you will die before someone you love, because you could not bear to outlive them (literally “you bury me”)."
   },
   {
     "term": "Duende",
@@ -3597,25 +3597,25 @@
     "intensity": "Medium",
     "energy": "Medium",
     "pleasantness": "Low",
-    "description": "Humorous compound: a face that looks badly in need of a slap (irritating smugness)."
+    "description": "A face badly in need of a fist—the blunt German image for irritating, punchable smugness (politer gloss: “slap-worthy face”)."
   },
   {
     "term": "Fernweh",
     "origin": "German",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Medium",
     "energy": "Low",
     "pleasantness": "Low/Neutral",
-    "description": "Aching longing for faraway places—even ones you have never visited (counterpart to homesickness)."
+    "description": "Aching for faraway places—**wanderlust** is close, but *Fernweh* can ache for cities and coasts you’ve never even visited (German; “far-sickness”)."
   },
   {
     "term": "Gigil",
-    "origin": "Filipino",
+    "origin": "Filipino (Tagalog)",
     "category": "Happiness/Joy",
     "intensity": "Soft",
     "energy": "Medium",
     "pleasantness": "High",
-    "description": "The urge to pinch, squeeze, or fuss over something unbearably cute."
+    "description": "The compulsion to pinch or squeeze something irresistibly cute—hands and voice both go a little foolish."
   },
   {
     "term": "Forelsket",
@@ -3647,7 +3647,7 @@
   {
     "term": "Mágoa",
     "origin": "Portuguese",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Medium",
     "energy": "Low",
     "pleasantness": "Low",
@@ -3687,7 +3687,7 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "Neutral/High",
-    "description": "Just the right amount—not too much, not too little; balanced sufficiency."
+    "description": "Not too much, not too little—juuuust right; the Goldilocks virtue of “enough” (Swedish)."
   },
   {
     "term": "Flâner",
@@ -3732,7 +3732,7 @@
     "intensity": "Soft",
     "energy": "Very Low",
     "pleasantness": "Neutral",
-    "description": "Gazing vacantly into the distance without thinking—mind-absent resting of the eyes."
+    "description": "Staring slack-jawed into the distance without a thought in mind—Japanese gives this vacant gaze its own name."
   },
   {
     "term": "Schnapsidee",
@@ -3741,7 +3741,7 @@
     "intensity": "Medium",
     "energy": "Medium",
     "pleasantness": "Neutral",
-    "description": "A plan or idea so absurd it might only have come from drunkenness (literally “schnapps idea”)."
+    "description": "An idea plausible only with too much alcohol in your veins—literally “schnapps idea.” English gets close with pipe dream, not a lexicon black hole."
   },
   {
     "term": "Slampadato",
@@ -3750,7 +3750,7 @@
     "intensity": "Medium",
     "energy": "Low",
     "pleasantness": "Neutral",
-    "description": "The orange-tinged skin tone from overuse of tanning salons (Babbel / humorous “untranslatable”)."
+    "description": "That UV-victim tint—being hooked on tanning-booth bronze (Italian slang)."
   },
   {
     "term": "Feestvarken",
@@ -3800,7 +3800,7 @@
   {
     "term": "Etterath",
     "origin": "English (coined, Dictionary of Obscure Sorrows)",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Medium",
     "energy": "Low",
     "pleasantness": "Neutral/Low",
@@ -3840,7 +3840,7 @@
     "intensity": "Soft",
     "energy": "Medium",
     "pleasantness": "Neutral",
-    "description": "Restlessness that pulls you outside again and again to see if someone is coming—expectant suspense."
+    "description": "Waiting for a guest who’s due any minute—the itch to keep going outside (or to the window) to see if they’ve arrived yet (Inuit/Inuktitut)."
   },
   {
     "term": "Fremdscham",
@@ -3849,7 +3849,7 @@
     "intensity": "Medium",
     "energy": "Medium",
     "pleasantness": "Low",
-    "description": "Vicarious embarrassment; cringing on someone else’s behalf (overlap with Spanish pena ajena)."
+    "description": "Vicarious embarrassment—wincing on someone else’s behalf (German also **Fremdschämen**; close cousins: Finnish **myötähäpeä**, Spanish *pena ajena*)."
   },
   {
     "term": "Gökotta",
@@ -3863,16 +3863,16 @@
   {
     "term": "Weltschmerz",
     "origin": "German",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Medium",
     "energy": "Low",
     "pleasantness": "Low",
-    "description": "Melancholy about the world’s flaws or cruelty—romantic world-weariness rather than personal grief alone."
+    "description": "“World grief”—romantic, gloomy weariness at how the world is; often glossed as the ache of comfortable youth staring at life (German; literally world-pain)."
   },
   {
     "term": "Han",
     "origin": "Korean",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Intense",
     "energy": "Low",
     "pleasantness": "Very Low",
@@ -3885,7 +3885,7 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "Neutral",
-    "description": "Hesitation to impose or inconvenience others, or worry about causing someone else to lose face or trouble."
+    "description": "Reluctance to ask a favor for fear of burdening someone—a small pang of guilt about imposing, or making them lose face (also written greng-jai)."
   },
   {
     "term": "Zhaghzhagh",
@@ -3894,7 +3894,7 @@
     "intensity": "Soft",
     "energy": "High",
     "pleasantness": "Low",
-    "description": "Chattering of the teeth from cold, rage, or anxiety—a bodily marker of stirred-up feeling."
+    "description": "Teeth chattering—from bitter cold, from rage, or from nerves—a sharp bodily signal of strain."
   },
   {
     "term": "Verschlimmbesserung",
@@ -3926,11 +3926,11 @@
   {
     "term": "Kummerspeck",
     "origin": "German",
-    "category": "Sadness/Grief",
+    "category": "Sadness and Grief",
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "Low",
-    "description": "Humorous compound: literal “grief bacon”—weight gained from emotional overeating during stress or sorrow."
+    "description": "Extra padding from stress-eating—literally “grief bacon” when sorrow or upheaval sends you back to the fridge."
   },
   {
     "term": "Sobremesa",
@@ -3939,7 +3939,7 @@
     "intensity": "Soft",
     "energy": "Low",
     "pleasantness": "High",
-    "description": "Leisurely tabletop time after eating—conversation and presence lingering once the meal is done."
+    "description": "After the plates are cleared, the easy talk and coffee that keep everyone at the table (Spanish)."
   },
   {
     "term": "Mångata",
@@ -3949,5 +3949,401 @@
     "energy": "Very Low",
     "pleasantness": "High",
     "description": "Moonlight’s rippled road across water—a still, enchanted nightscape feeling."
+  },
+  {
+    "term": "Uitwaaien",
+    "origin": "Dutch",
+    "category": "Peace/Solitude",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "High",
+    "description": "Literally to walk in the wind; figuratively, heading into open air or countryside to blow the cobwebs away and clear your head."
+  },
+  {
+    "term": "Tingo",
+    "origin": "Rapa Nui",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "To end up owning something from a friend’s house by borrowing it bit by bit—a habit of soft appropriation (widely cited from Easter Island / Pascuense word lists)."
+  },
+  {
+    "term": "Alharaca",
+    "origin": "Spanish (from Arabic al-haraka, ‘movement’)",
+    "category": "Anger/Boundaries",
+    "intensity": "Intense",
+    "energy": "High",
+    "pleasantness": "Low",
+    "description": "A loud, almost violent show of emotion over a small thing—wild gestures, dramatic hurt, or explosive excitement out of proportion to the trigger."
+  },
+  {
+    "term": "Mokita",
+    "origin": "Kivila (Papua New Guinea)",
+    "category": "Social Connection",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "What everyone knows but nobody says—the shared hush around an obvious truth (elephant-in-the-room as social convention)."
+  },
+  {
+    "term": "Geborgenheit",
+    "origin": "German",
+    "category": "Happiness, Contentment, and Joy",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Very High",
+    "description": "Feeling utterly safe and held—as if harm can’t reach you—usually tied to a trusted person, home, or refuge."
+  },
+  {
+    "term": "Gunnen",
+    "origin": "Dutch",
+    "category": "Happiness/Joy",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "High",
+    "description": "To wish someone a pleasure you might miss yourself—generous sympathy that says they should have the good thing without envy."
+  },
+  {
+    "term": "Shemomedjamo",
+    "origin": "Georgian",
+    "category": "Happiness, Contentment, and Joy",
+    "intensity": "Medium",
+    "energy": "Low",
+    "pleasantness": "High",
+    "description": "You’re full, but the food is too good—you keep eating anyway. Often glossed as “I accidentally ate the whole thing” in English listicles about Georgian."
+  },
+  {
+    "term": "Orenda",
+    "origin": "Wyandot/Huron (Iroquoian languages)",
+    "category": "Happiness/Joy",
+    "intensity": "Medium",
+    "energy": "Medium",
+    "pleasantness": "High",
+    "description": "A traditional sense of mind-and-will as a tangible power you can exert to shift events—human agency made almost spiritual, set against sheer fatalism."
+  },
+  {
+    "term": "Gümüş servi",
+    "origin": "Turkish",
+    "category": "Peace/Solitude",
+    "intensity": "Soft",
+    "energy": "Very Low",
+    "pleasantness": "High",
+    "description": "Moonlight shimmering on water—a still, bright image-word in Turkish (often repeated in English as gumusservi)."
+  },
+  {
+    "term": "Koi no yokan",
+    "origin": "Japanese",
+    "category": "Happiness/Joy",
+    "intensity": "Soft",
+    "energy": "Medium",
+    "pleasantness": "Very High",
+    "description": "On first meeting someone, the sense that the two of you will fall in love—not infatuation yet, but the quiet certainty it’s heading that way."
+  },
+  {
+    "term": "Mencolek",
+    "origin": "Indonesian",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "High",
+    "description": "The tap on someone’s far shoulder so they look the wrong way—a playful prank gesture, not really an emotion word."
+  },
+  {
+    "term": "Zeg",
+    "origin": "Georgian",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "The day after tomorrow (Georgian). English has the rare **overmorrow**—this is the word people actually use."
+  },
+  {
+    "term": "Faamiti",
+    "origin": "Samoan",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Sucking air past the lips to make a small squeak that gets a dog’s or child’s attention—sound-gesture more than an emotion."
+  },
+  {
+    "term": "Bakku-shan",
+    "origin": "Japanese",
+    "category": "Social Comparison",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Low",
+    "description": "Slang for someone who seems striking from behind but underwhelming from the front—a look-based letdown."
+  },
+  {
+    "term": "Bilita Mpash",
+    "origin": "Bantu (loanword in several languages)",
+    "category": "Happiness/Joy",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Very High",
+    "description": "An exceptionally good dream—the opposite of a nightmare; blissful sleep-fantasy rather than merely “pleasant.”"
+  },
+  {
+    "term": "Cavoli riscaldati",
+    "origin": "Italian",
+    "category": "Sadness and Grief",
+    "intensity": "Medium",
+    "energy": "Low",
+    "pleasantness": "Low",
+    "description": "“Reheated cabbage”—trying to revive a romance that’s already failed; a relationship that shouldn’t be warmed up again."
+  },
+  {
+    "term": "Cotisuelto",
+    "origin": "Caribbean Spanish",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Someone who wears a dress shirt untucked over the trousers—fashion habit, not a mood."
+  },
+  {
+    "term": "Fisselig",
+    "origin": "German",
+    "category": "Anxiety",
+    "intensity": "Medium",
+    "energy": "High",
+    "pleasantness": "Low",
+    "description": "Jangled and on edge to the point you can’t settle—frazzled, scattered, unable to finish what you started."
+  },
+  {
+    "term": "Myötähäpeä",
+    "origin": "Finnish",
+    "category": "Shame/Confusion",
+    "intensity": "Medium",
+    "energy": "Medium",
+    "pleasantness": "Low",
+    "description": "Secondhand embarrassment—cringing with someone through their awkward moment (akin to German Fremdscham)."
+  },
+  {
+    "term": "Frühjahrsmüdigkeit",
+    "origin": "German",
+    "category": "Apathy/Depression",
+    "intensity": "Medium",
+    "energy": "Low",
+    "pleasantness": "Low",
+    "description": "“Spring tiredness”—low mood, fatigue, or heaviness as the days lengthen; sometimes contrasted with winter SAD as the seasons flip."
+  },
+  {
+    "term": "Honigkuchenpferd",
+    "origin": "German",
+    "category": "Happiness/Joy",
+    "intensity": "Soft",
+    "energy": "Medium",
+    "pleasantness": "Very High",
+    "description": "Literally “honey-cake horse”—grinning so wide you can’t stop, like the Cheshire cat (broad, sticky smile)."
+  },
+  {
+    "term": "Hygge",
+    "origin": "Danish",
+    "category": "Social Connection",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "High",
+    "description": "The noun Danes reach for when things feel cozy and convivial—overlap with nice, comfy, and warm company; pairs with adjective hyggelig. Marketing abroad hypes it more than the semantics warrant."
+  },
+  {
+    "term": "Kaelling",
+    "origin": "Danish",
+    "category": "Nonspecific",
+    "intensity": "Medium",
+    "energy": "High",
+    "pleasantness": "Low",
+    "description": "An insulting stereotype of a woman scolding children in public—loaded slang, closer to caricature than affect."
+  },
+  {
+    "term": "Layogenic",
+    "origin": "Tagalog",
+    "category": "Social Comparison",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Low",
+    "description": "Attractive from a distance but messy up close—like a Monet that dissolves when you step nearer."
+  },
+  {
+    "term": "L'esprit de l'escalier",
+    "origin": "French",
+    "category": "Confusion",
+    "intensity": "Medium",
+    "energy": "Medium",
+    "pleasantness": "Low",
+    "description": "“Staircase wit”—the perfect reply you think of only after you’ve left, halfway down the stairs."
+  },
+  {
+    "term": "Luftmensch",
+    "origin": "Yiddish",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "An impractical dreamer “made of air”—big visions, little grip on money or worldly detail."
+  },
+  {
+    "term": "Packesel",
+    "origin": "German",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Medium",
+    "pleasantness": "Low",
+    "description": "The pack-mule of the group—stuck carrying everyone else’s bags; literally “pack donkey.”"
+  },
+  {
+    "term": "Pålegg",
+    "origin": "Norwegian",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Catch-all for anything you might lay on bread—cheese, jam, fish, chocolate spread; sandwich vocabulary."
+  },
+  {
+    "term": "Pana Po'o",
+    "origin": "Hawaiian",
+    "category": "Confusion",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Scratching your head to jog a slippery memory—where did I leave those keys?"
+  },
+  {
+    "term": "Pelinti",
+    "origin": "Buli (Ghana)",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Medium",
+    "pleasantness": "Low",
+    "description": "Shuttling scorching food around your mouth with little hisses—cooling pizza or stew on the tongue."
+  },
+  {
+    "term": "Razbliuto",
+    "origin": "English listicle fiction (not Russian)",
+    "category": "Sadness and Grief",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Alleged “Russian” for loving-not love—traced by William Safire to a chain (Moore → Rheingold → Bryan) back to *The Man from U.N.C.L.E.* scriptwriters. Kept as cautionary glossary junk, not living lexicon."
+  },
+  {
+    "term": "Schlemiel",
+    "origin": "Yiddish",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Medium",
+    "pleasantness": "Low",
+    "description": "The chronic klutz who knocks over the coffee—the one who makes the mess (paired with schlimazel)."
+  },
+  {
+    "term": "Schlimazel",
+    "origin": "Yiddish",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Low",
+    "description": "The one the coffee lands on—always catching others’ spills; born under a dripping cloud (paired with schlemiel)."
+  },
+  {
+    "term": "Seigneur-terraces",
+    "origin": "French",
+    "category": "Social Comparison",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Low",
+    "description": "Café lingerers who camp at a table forever on one espresso—a jab at cheap throne-sitting."
+  },
+  {
+    "term": "Sentak bangun",
+    "origin": "Indonesian",
+    "category": "Anxiety",
+    "intensity": "Soft",
+    "energy": "High",
+    "pleasantness": "Low",
+    "description": "Jolting awake with a start—heart suddenly loud in a dark room."
+  },
+  {
+    "term": "Shouganai",
+    "origin": "Japanese",
+    "category": "Peace/Solitude",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "“It can’t be helped”—resigned acceptance so you don’t burn fuel raging at the fixed facts."
+  },
+  {
+    "term": "Treppenwitz",
+    "origin": "German",
+    "category": "Confusion",
+    "intensity": "Medium",
+    "energy": "Medium",
+    "pleasantness": "Low",
+    "description": "The comeback you think of on the staircase leaving—the German twin of *l’esprit de l’escalier*."
+  },
+  {
+    "term": "Tsundoku",
+    "origin": "Japanese",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Buying books (or magazines) faster than you read them—tsunami of unread stacks on the nightstand."
+  },
+  {
+    "term": "Uffda",
+    "origin": "Scandinavian (esp. Norwegian American English)",
+    "category": "Social Connection",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Sympathetic wince—ouch plus I’m sorry that happened; staple of Upper Midwest US speech from Scandinavian settlers."
+  },
+  {
+    "term": "Vybafnout",
+    "origin": "Czech",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Medium",
+    "pleasantness": "High",
+    "description": "Leap out and shout boo—the Czech cousin of “made you jump.”"
+  },
+  {
+    "term": "Yuputka",
+    "origin": "Ulwa",
+    "category": "Fear/Anxiety",
+    "intensity": "Soft",
+    "energy": "Medium",
+    "pleasantness": "Low",
+    "description": "Creepy-crawly feeling on the skin when phantom bugs scamper—made for night walks in the brush."
+  },
+  {
+    "term": "Utepils",
+    "origin": "Norwegian",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "High",
+    "description": "A compound noun (not a quirky verb): ute “outside” + pils “pilsner”—beer enjoyed outdoors in good weather. Transparent in Norwegian; listicles oversell it."
+  },
+  {
+    "term": "Goya",
+    "origin": "Urdu (from Persian)",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "Often mistranslated as “suspension of disbelief in storytelling”; in ordinary use it means “it is said,” “reportedly,” “they say”—framing hearsay, not a special narrative trance."
+  },
+  {
+    "term": "Çekoslovakyalılaştıramadıklarımızdanmışsınız",
+    "origin": "Turkish",
+    "category": "Nonspecific",
+    "intensity": "Soft",
+    "energy": "Low",
+    "pleasantness": "Neutral",
+    "description": "A poster-child agglutinated form glossed as “you are reportedly among those we couldn’t turn Czechoslovakian”—really syntax welded into one token. Shows Turkish morphology, not a single ineffable concept."
   }
 ]

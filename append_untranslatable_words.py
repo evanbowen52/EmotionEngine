@@ -7,7 +7,7 @@ NEW = [
     {
         "term": "Toska",
         "origin": "Russian",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Intense",
         "energy": "Variable",
         "pleasantness": "Low",
@@ -34,7 +34,7 @@ NEW = [
     {
         "term": "Litost",
         "origin": "Czech",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Intense",
         "energy": "Low",
         "pleasantness": "Very Low",
@@ -79,7 +79,7 @@ NEW = [
     {
         "term": "Ya'aburnee",
         "origin": "Arabic",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Intense",
         "energy": "Medium",
         "pleasantness": "Low/High (Conflicted)",
@@ -106,7 +106,7 @@ NEW = [
     {
         "term": "Fernweh",
         "origin": "German",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Medium",
         "energy": "Low",
         "pleasantness": "Low/Neutral",
@@ -151,7 +151,7 @@ NEW = [
     {
         "term": "Mágoa",
         "origin": "Portuguese",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Medium",
         "energy": "Low",
         "pleasantness": "Low",
@@ -304,7 +304,7 @@ NEW = [
     {
         "term": "Etterath",
         "origin": "English (coined, Dictionary of Obscure Sorrows)",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Medium",
         "energy": "Low",
         "pleasantness": "Neutral/Low",
@@ -370,7 +370,7 @@ NEW2 = [
     {
         "term": "Weltschmerz",
         "origin": "German",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Medium",
         "energy": "Low",
         "pleasantness": "Low",
@@ -379,7 +379,7 @@ NEW2 = [
     {
         "term": "Han",
         "origin": "Korean",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Intense",
         "energy": "Low",
         "pleasantness": "Very Low",
@@ -433,7 +433,7 @@ NEW2 = [
     {
         "term": "Kummerspeck",
         "origin": "German",
-        "category": "Sadness/Grief",
+        "category": "Sadness and Grief",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "Low",
