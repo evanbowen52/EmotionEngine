@@ -155,6 +155,8 @@
       fill: #c4c4cc;
       font-weight: 500;
     }
+    .legend-hit { cursor: pointer; }
+    .legend-category-box { pointer-events: auto; }
     .node circle {
       stroke: #0d0d0d;
       stroke-width: 1.2px;
@@ -297,7 +299,7 @@
     <button type="button" id="zoom-in">Zoom +</button>
     <button type="button" id="zoom-out">Zoom −</button>
     <button type="button" id="reset-view">Reset view</button>
-    <span id="hint">Wheel zoom · drag background to pan · drag nodes · narrow filters in panel →</span>
+    <span id="hint">Wheel zoom · drag background to pan · drag nodes · click a category chip to show/hide · filters →</span>
   </div>
 
   <aside id="controls">
@@ -460,7 +462,9 @@
     const H = window.innerHeight;
     const cx = W / 2;
     const cy = H / 2;
-    const R = Math.min(W, H) * 0.42;
+    const R_chart = Math.min(W, H) * 0.42;
+    const R = R_chart * 0.86;
+    const catBox = document.getElementById("cat-boxes");
 
     nodes.forEach((d) => {
       d.tx = cx + d.rNorm * R * Math.cos(d.theta);
@@ -516,27 +520,60 @@
       .attr("x", 0)
       .attr("y", 0);
 
-    function legendTextBox(gParent, x, y, label, strokeColor) {
+    function legendTextBox(gParent, x, y, label, strokeColor, meta) {
       const padX = 7;
       const padY = 4;
       const g = gParent.append("g").attr("transform", `translate(${x},${y})`);
+      if (meta && meta.category) g.attr("class", "legend-category-box");
       const text = g
         .append("text")
         .attr("class", strokeColor ? "legend-box-text" : "legend-box-text ring-tier")
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
+        .attr("pointer-events", "none")
         .text(label);
       const bb = text.node().getBBox();
+      const rx = bb.x - padX;
+      const ry = bb.y - padY;
+      const rw = bb.width + 2 * padX;
+      const rh = bb.height + 2 * padY;
       g.insert("rect", "text")
         .attr("class", "legend-box-bg")
-        .attr("x", bb.x - padX)
-        .attr("y", bb.y - padY)
-        .attr("width", bb.width + 2 * padX)
-        .attr("height", bb.height + 2 * padY)
+        .attr("x", rx)
+        .attr("y", ry)
+        .attr("width", rw)
+        .attr("height", rh)
         .attr("rx", 5)
         .attr("ry", 5)
-        .attr("stroke", strokeColor || "#5c6478");
+        .attr("stroke", strokeColor || "#5c6478")
+        .attr("pointer-events", "none");
+      if (meta && meta.category) {
+        g.append("rect")
+          .attr("class", "legend-hit")
+          .attr("x", rx)
+          .attr("y", ry)
+          .attr("width", rw)
+          .attr("height", rh)
+          .attr("rx", 5)
+          .attr("ry", 5)
+          .attr("fill", "transparent")
+          .attr("pointer-events", "all")
+          .attr("title", "Show or hide: " + meta.category)
+          .on("click", (e) => {
+            e.stopPropagation();
+            const cat = meta.category;
+            ui.cat[cat] = !ui.cat[cat];
+            const inp = [...catBox.querySelectorAll('input[type="checkbox"]')].find(
+              (el) => el.dataset.cat === cat
+            );
+            if (inp) inp.checked = ui.cat[cat];
+            applyGraph();
+          });
+      }
+      return g;
     }
+
+    const legendCategoryState = [];
 
     const ringLabels = [
       { r: 0.34, t: "Soft" },
@@ -555,33 +592,48 @@
         .attr("stroke-dasharray", "4 6");
       const lx = cx + ring.r * R + 6;
       const ly = cy - ring.r * R + 4;
-      legendTextBox(legendG, lx, ly, ring.t, null);
+      legendTextBox(legendG, lx, ly, ring.t, null, null);
     });
 
+    const lr = R + Math.max(52, R_chart * 0.13);
     categories.forEach((c, i) => {
       const a0 = (i / nCat) * TWO_PI - Math.PI / 2;
       const a1 = ((i + 1) / nCat) * TWO_PI - Math.PI / 2;
       const arc = d3.path();
       arc.moveTo(cx, cy);
-      arc.arc(cx, cy, R + 18, a0, a1);
+      arc.arc(cx, cy, R + 14, a0, a1);
       arc.closePath();
-      legendG
+      const wedge = legendG
         .append("path")
         .attr("d", arc.toString())
         .attr("fill", color(c))
         .attr("fill-opacity", 0.07)
-        .attr("stroke", "none");
+        .attr("stroke", "none")
+        .attr("pointer-events", "none");
       const mid = (a0 + a1) / 2;
-      const lr = R + 28;
       const label = c.length > 22 ? c.slice(0, 20) + "…" : c;
-      legendTextBox(
+      const labelG = legendTextBox(
         legendG,
         cx + lr * Math.cos(mid),
         cy + lr * Math.sin(mid),
         label,
-        color(c)
+        color(c),
+        { category: c }
       );
+      legendCategoryState.push({ category: c, wedge, labelG });
     });
+
+    function refreshLegendCategoryStyles() {
+      legendCategoryState.forEach(({ category, wedge, labelG }) => {
+        const on = ui.cat[category];
+        wedge.attr("fill-opacity", on ? 0.07 : 0.02);
+        labelG
+          .select(".legend-box-bg")
+          .attr("opacity", on ? 1 : 0.4)
+          .attr("stroke-opacity", on ? 1 : 0.35);
+        labelG.select(".legend-box-text").attr("opacity", on ? 1 : 0.48);
+      });
+    }
 
     const gLinks = gRoot.append("g").attr("class", "links");
     const gNodes = gRoot.append("g").attr("class", "nodes");
@@ -746,6 +798,7 @@
         linkSel.style("display", "none");
         refreshEdgesVisibility();
         updateLabelVisibility();
+        refreshLegendCategoryStyles();
         return;
       }
 
@@ -770,6 +823,7 @@
       refreshEdgesVisibility();
       updateLabelVisibility();
       positionNodeLabels();
+      refreshLegendCategoryStyles();
     }
 
     function refreshEdgesVisibility() {
@@ -798,7 +852,6 @@
       syncSlidersFromUi();
     }
 
-    const catBox = document.getElementById("cat-boxes");
     categories.forEach((c) => {
       const row = document.createElement("label");
       row.className = "row";
