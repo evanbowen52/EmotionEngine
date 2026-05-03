@@ -1,13 +1,14 @@
 """Emit emotion-polar-map.html — single file with embedded emotions.json + filter UI."""
 import json
+from pathlib import Path
 
-ROOT = r"d:\_EVAN\Dev\EmotionEngine"
-JSON_PATH = f"{ROOT}\\emotions.json"
-OUT_PATH = f"{ROOT}\\emotion-polar-map.html"
+ROOT = Path(__file__).resolve().parent
+JSON_PATH = ROOT / "emotions.json"
+OUT_PATH = ROOT / "emotion-polar-map.html"
 
 
 def main() -> None:
-    with open(JSON_PATH, encoding="utf-8") as f:
+    with JSON_PATH.open(encoding="utf-8") as f:
         data = json.load(f)
     blob = json.dumps(data, ensure_ascii=False)
 
@@ -1058,8 +1059,7 @@ def main() -> None:
 """
 
     html = html.replace("__BLOB__", blob)
-    with open(OUT_PATH, "w", encoding="utf-8") as f:
-        f.write(html)
+    OUT_PATH.write_text(html, encoding="utf-8")
     print("Wrote", OUT_PATH, len(html.encode("utf-8")), "bytes")
 
 
