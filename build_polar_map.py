@@ -180,6 +180,10 @@ def main() -> None:
       stroke: #fdcb6e;
       stroke-width: 2.5px;
     }
+    .node.orbit-focus circle {
+      stroke: #dfe6e9;
+      stroke-width: 2.5px;
+    }
     .node:active circle { cursor: grabbing; }
     .node text {
       font-size: 8.5px;
@@ -306,6 +310,20 @@ def main() -> None:
       color: #b8b8c0;
       font-size: 12px;
     }
+    #spotlight .orbit-controls {
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #3a3a42;
+    }
+    #spotlight .orbit-controls .range-row label {
+      display: block;
+      margin-bottom: 4px;
+      color: #9a9aa2;
+      font-size: 11px;
+    }
+    #spotlight .orbit-controls input[type="range"] {
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -363,6 +381,14 @@ def main() -> None:
       </div>
     </div>
     <div id="spotlight-inner" class="spot-inner">
+    <div class="orbit-controls">
+      <label class="row"><input type="checkbox" id="orbit-enable" /> Orbit (follow circle by angle)</label>
+      <label class="row"><input type="checkbox" id="orbit-loop" checked /> Loop</label>
+      <div class="range-row">
+        <label>Orbit pace · <span id="orbit-pace-v">—</span></label>
+        <input type="range" id="orbit-pace" min="0" max="100" value="35" />
+      </div>
+    </div>
     <h3 id="spot-term"></h3>
     <dl id="spot-meta"></dl>
     <p id="spot-desc"></p>
@@ -522,6 +548,122 @@ def main() -> None:
 
     function filteredNodes() {
       return nodes.filter((d) => catVisible(d) && normVisible(d));
+    }
+
+    let orbitTimer = null;
+    let orbitIndex = 0;
+    let orbitList = [];
+
+    function buildOrbitList() {
+      return filteredNodes()
+        .slice()
+        .sort((a, b) => a.theta - b.theta || a.rNorm - b.rNorm || a.id - b.id);
+    }
+
+    function clearOrbitTimer() {
+      if (orbitTimer != null) {
+        clearTimeout(orbitTimer);
+        orbitTimer = null;
+      }
+    }
+
+    function orbitPaceMs() {
+      const el = document.getElementById("orbit-pace");
+      const pct = el ? +el.value : 35;
+      return Math.round(600 + (pct / 100) * 4400);
+    }
+
+    function syncOrbitPaceLabel() {
+      const lab = document.getElementById("orbit-pace-v");
+      if (lab) lab.textContent = (orbitPaceMs() / 1000).toFixed(1) + " s";
+    }
+
+    function pauseOrbitFromUser() {
+      clearOrbitTimer();
+      const cb = document.getElementById("orbit-enable");
+      if (cb && cb.checked) cb.checked = false;
+      if (nodeSel) nodeSel.classed("orbit-focus", false);
+    }
+
+    function showCurrentOrbitStep() {
+      orbitList = buildOrbitList();
+      if (!orbitList.length) return;
+      orbitIndex = Math.max(0, Math.min(orbitIndex, orbitList.length - 1));
+      const d = orbitList[orbitIndex];
+      renderSpotlight(RAW[d.id]);
+      if (!nodeSel || nodeSel.empty()) return;
+      nodeSel.classed("orbit-focus", (n) => n.id === d.id);
+      const g = nodeSel.filter((n) => n.id === d.id);
+      g.select("circle")
+        .interrupt()
+        .attr("r", 5)
+        .transition()
+        .duration(180)
+        .attr("r", 9)
+        .transition()
+        .duration(220)
+        .attr("r", 5);
+    }
+
+    function scheduleNextOrbit() {
+      clearOrbitTimer();
+      const cb = document.getElementById("orbit-enable");
+      if (!cb || !cb.checked) return;
+      const dwell = orbitPaceMs();
+      orbitTimer = setTimeout(() => {
+        orbitTimer = null;
+        if (!document.getElementById("orbit-enable").checked) return;
+        orbitList = buildOrbitList();
+        if (!orbitList.length) {
+          pauseOrbitFromUser();
+          return;
+        }
+        const loop = document.getElementById("orbit-loop").checked;
+        if (orbitIndex >= orbitList.length - 1) {
+          if (loop) orbitIndex = 0;
+          else {
+            pauseOrbitFromUser();
+            return;
+          }
+        } else orbitIndex++;
+
+        orbitIndex = Math.min(orbitIndex, orbitList.length - 1);
+        showCurrentOrbitStep();
+        scheduleNextOrbit();
+      }, dwell);
+    }
+
+    function syncOrbitAfterGraphChange() {
+      const cb = document.getElementById("orbit-enable");
+      if (!cb || !cb.checked) return;
+      clearOrbitTimer();
+      const prevId =
+        orbitList.length && orbitIndex >= 0 && orbitIndex < orbitList.length
+          ? orbitList[orbitIndex].id
+          : null;
+      orbitList = buildOrbitList();
+      if (!orbitList.length) {
+        cb.checked = false;
+        return;
+      }
+      if (prevId != null) {
+        const j = orbitList.findIndex((n) => n.id === prevId);
+        orbitIndex = j >= 0 ? j : Math.min(orbitIndex, orbitList.length - 1);
+      } else orbitIndex = Math.min(orbitIndex, orbitList.length - 1);
+      showCurrentOrbitStep();
+      scheduleNextOrbit();
+    }
+
+    function startOrbitFromCheckbox() {
+      orbitList = buildOrbitList();
+      const cb = document.getElementById("orbit-enable");
+      if (!orbitList.length) {
+        if (cb) cb.checked = false;
+        return;
+      }
+      orbitIndex = Math.min(orbitIndex, orbitList.length - 1);
+      showCurrentOrbitStep();
+      scheduleNextOrbit();
     }
 
     const svg = d3.select("#viz").attr("width", W).attr("height", H);
@@ -711,6 +853,7 @@ def main() -> None:
     const dragBehav = d3
       .drag()
       .on("start", (ev, d) => {
+        pauseOrbitFromUser();
         if (!sim) return;
         sim.alphaTarget(0.35).restart();
         d.fx = d.x;
@@ -806,13 +949,18 @@ def main() -> None:
             .style("left", ev.clientX + 14 + "px")
             .style("top", ev.clientY + 14 + "px");
         })
-        .on("mouseleave", () => tip.style("display", "none"));
+        .on("mouseleave", () => tip.style("display", "none"))
+        .on("click", (ev, d) => {
+          ev.stopPropagation();
+          pauseOrbitFromUser();
+        });
 
       if (vis.length === 0) {
         linkSel.style("display", "none");
         refreshEdgesVisibility();
         updateLabelVisibility();
         refreshLegendCategoryStyles();
+        pauseOrbitFromUser();
         return;
       }
 
@@ -838,6 +986,7 @@ def main() -> None:
       updateLabelVisibility();
       positionNodeLabels();
       refreshLegendCategoryStyles();
+      syncOrbitAfterGraphChange();
     }
 
     function refreshEdgesVisibility() {
@@ -947,6 +1096,7 @@ def main() -> None:
         return ev.target.classList.contains("zoom-bg");
       })
       .on("zoom", (ev) => {
+        pauseOrbitFromUser();
         ui.zoomK = ev.transform.k;
         gRoot.attr("transform", ev.transform);
         updateLabelVisibility();
@@ -1036,6 +1186,7 @@ def main() -> None:
     document.getElementById("spot-toggle").addEventListener("click", () => {
       const el = document.getElementById("spotlight");
       el.classList.toggle("collapsed");
+      if (el.classList.contains("collapsed")) pauseOrbitFromUser();
       try {
         localStorage.setItem(
           "emotionPolar.spotlightCollapsed",
@@ -1045,11 +1196,31 @@ def main() -> None:
       syncPanelToggleButtons();
     });
 
+    syncOrbitPaceLabel();
+    document.getElementById("orbit-pace").addEventListener("input", () => {
+      syncOrbitPaceLabel();
+      if (document.getElementById("orbit-enable").checked) {
+        clearOrbitTimer();
+        scheduleNextOrbit();
+      }
+    });
+    document.getElementById("orbit-enable").addEventListener("change", (ev) => {
+      if (ev.target.checked) {
+        startOrbitFromCheckbox();
+      } else {
+        clearOrbitTimer();
+        if (nodeSel) nodeSel.classed("orbit-focus", false);
+      }
+    });
+
     refreshSpotlight();
     syncPanelToggleButtons();
     document
       .getElementById("spot-refresh")
-      .addEventListener("click", refreshSpotlight);
+      .addEventListener("click", () => {
+        pauseOrbitFromUser();
+        refreshSpotlight();
+      });
 
     window.addEventListener("resize", () => location.reload());
   })();
