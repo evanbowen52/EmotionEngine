@@ -184,6 +184,16 @@ def main() -> None:
       stroke: #dfe6e9;
       stroke-width: 2.5px;
     }
+    .node.archetypal circle {
+      stroke: #fdcb6e;
+      stroke-width: 1.8px;
+      stroke-dasharray: 3, 2.5;
+    }
+    .node.archetypal.highlight circle,
+    .node.archetypal.orbit-focus circle {
+      stroke-dasharray: none;
+      stroke-width: 2.5px;
+    }
     .node:active circle { cursor: grabbing; }
     .node text {
       font-size: 8.5px;
@@ -191,8 +201,63 @@ def main() -> None:
       pointer-events: none;
       text-shadow: 0 0 3px #000, 0 0 6px #000;
     }
-    .link { stroke: #444; stroke-opacity: 0.35; }
-    .link.hidden { stroke-opacity: 0; }
+    .link { stroke: #444; stroke-opacity: 0.35; stroke-dasharray: none; transition: stroke-opacity 0.25s, stroke 0.25s, stroke-width 0.25s; }
+    .link.hidden { stroke-opacity: 0 !important; }
+    .link.semantic {
+      stroke-opacity: 0.65;
+      stroke-width: 2px;
+    }
+    .link.semantic.confused_with {
+      stroke: #e17055;
+      stroke-dasharray: 4, 3;
+    }
+    .link.semantic.triggered_by {
+      stroke: #0984e3;
+      stroke-dasharray: 6, 2;
+    }
+    .link.semantic.triggers {
+      stroke: #0984e3;
+    }
+    .link.semantic.adjacent {
+      stroke: #00cec9;
+    }
+    .link.semantic.leads_to {
+      stroke: #9b59b6;
+    }
+    .link.semantic.opposite_of {
+      stroke: #fdcb6e;
+      stroke-dasharray: 4, 4;
+    }
+    .conn-chip {
+      background: #2a2a2c;
+      color: #ccc;
+      border: 1px solid #4a4a52;
+      border-radius: 12px;
+      padding: 3px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .conn-chip:hover {
+      background: #38383c;
+      color: #fff;
+      border-color: #fdcb6e;
+    }
+    .conn-chip .relation-tag {
+      font-size: 8px;
+      text-transform: uppercase;
+      color: #fdcb6e;
+      font-weight: 600;
+      background: rgba(253, 203, 110, 0.1);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    .conn-chip.confused_with .relation-tag { color: #e17055; background: rgba(225, 112, 85, 0.1); }
+    .conn-chip.triggered_by .relation-tag, .conn-chip.triggers .relation-tag { color: #0984e3; background: rgba(9, 132, 227, 0.1); }
+    .conn-chip.adjacent .relation-tag { color: #00cec9; background: rgba(0, 206, 201, 0.1); }
     .tooltip {
       position: fixed;
       pointer-events: none;
@@ -344,6 +409,7 @@ def main() -> None:
       <input type="search" id="search" placeholder="Find term…" autocomplete="off" />
     </section>
     <section>
+      <label class="row"><input type="checkbox" id="opt-english-only" /> English terms only</label>
       <label class="row"><input type="checkbox" id="opt-edges" checked /> Show edges (links)</label>
       <label class="row"><input type="checkbox" id="opt-labels" /> Always show labels (else zoom in)</label>
     </section>
@@ -392,6 +458,10 @@ def main() -> None:
     <h3 id="spot-term"></h3>
     <dl id="spot-meta"></dl>
     <p id="spot-desc"></p>
+    <div id="spot-connections-container" style="margin-top: 12px; border-top: 1px solid #3a3a42; padding-top: 10px; display: none;">
+      <h4 style="margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888;">Connected Emotions</h4>
+      <div id="spot-connections" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+    </div>
     </div>
   </aside>
 
@@ -409,6 +479,8 @@ def main() -> None:
       labelsAlways: false,
       search: "",
       zoomK: 1,
+      selectedId: null,
+      englishOnly: false,
     };
 
     function scorePleasantness(s) {
@@ -491,12 +563,15 @@ def main() -> None:
         intensity: d.intensity,
         origin: d.origin,
         description: d.description,
+        is_archetype: d.is_archetype,
         rNorm: r,
         theta: angle,
         sector,
         catI: ci,
       };
     });
+
+    const nodesByTerm = d3.group(nodes, (d) => d.term.trim().toLowerCase());
 
     const W = window.innerWidth;
     const H = window.innerHeight;
@@ -532,6 +607,32 @@ def main() -> None:
       return L;
     }
 
+    function buildSemanticLinks(subset) {
+      const subsetIds = new Set(subset.map((d) => d.id));
+      const L = [];
+      subset.forEach((d) => {
+        const rawItem = RAW[d.id];
+        if (rawItem && Array.isArray(rawItem.connections)) {
+          rawItem.connections.forEach((conn) => {
+            const targetTerm = conn.term.trim().toLowerCase();
+            const targets = nodesByTerm.get(targetTerm) || [];
+            targets.forEach((targetNode) => {
+              if (subsetIds.has(targetNode.id)) {
+                L.push({
+                  source: d.id,
+                  target: targetNode.id,
+                  relation: conn.relation,
+                  notes: conn.notes,
+                  isSemantic: true
+                });
+              }
+            });
+          });
+        }
+      });
+      return L;
+    }
+
     function normVisible(d) {
       return d.rNorm >= ui.rMin && d.rNorm <= ui.rMax;
     }
@@ -546,8 +647,15 @@ def main() -> None:
       return String(d.term).toLowerCase().includes(q);
     }
 
+    function originVisible(d) {
+      if (!ui.englishOnly) return true;
+      const raw = RAW[d.id];
+      const origin = raw && raw.origin ? raw.origin.trim().toLowerCase() : "english";
+      return origin === "english";
+    }
+
     function filteredNodes() {
-      return nodes.filter((d) => catVisible(d) && normVisible(d));
+      return nodes.filter((d) => catVisible(d) && normVisible(d) && originVisible(d));
     }
 
     let orbitTimer = null;
@@ -667,6 +775,9 @@ def main() -> None:
     }
 
     const svg = d3.select("#viz").attr("width", W).attr("height", H);
+    svg.on("click", () => {
+      clearSelection();
+    });
     const gRoot = svg.append("g");
     gRoot
       .append("rect")
@@ -874,7 +985,9 @@ def main() -> None:
 
     function applyGraph() {
       const vis = filteredNodes();
-      const links = buildCategoryLinks(vis);
+      const catLinks = buildCategoryLinks(vis);
+      const semLinks = buildSemanticLinks(vis);
+      const links = [...catLinks, ...semLinks];
 
       vis.forEach((d) => {
         if (d.x == null || Number.isNaN(d.x)) {
@@ -896,7 +1009,7 @@ def main() -> None:
           return s + "-" + t;
         })
         .join("line")
-        .attr("class", "link");
+        .attr("class", (e) => "link" + (e.isSemantic ? " semantic " + (e.relation || "adjacent") : ""));
 
       nodeSel = gNodes
         .selectAll("g")
@@ -925,6 +1038,7 @@ def main() -> None:
         .attr("opacity", (d) => labelOpacity(d));
 
       nodeSel.classed("highlight", (d) => searchMatch(d));
+      nodeSel.classed("archetypal", (d) => d.is_archetype);
 
       nodeSel.call(dragBehav);
       nodeSel
@@ -953,6 +1067,7 @@ def main() -> None:
         .on("click", (ev, d) => {
           ev.stopPropagation();
           pauseOrbitFromUser();
+          selectNode(d);
         });
 
       if (vis.length === 0) {
@@ -1058,6 +1173,11 @@ def main() -> None:
       applyGraph();
     });
 
+    document.getElementById("opt-english-only").addEventListener("change", (ev) => {
+      ui.englishOnly = ev.target.checked;
+      applyGraph();
+    });
+
     document.getElementById("opt-edges").addEventListener("change", (ev) => {
       ui.edges = ev.target.checked;
       refreshEdgesVisibility();
@@ -1127,7 +1247,99 @@ def main() -> None:
       return Math.floor(Math.random() * n);
     }
 
-    function renderSpotlight(d) {
+    function centerCameraOnNode(nodeObj) {
+      if (!nodeObj) return;
+      const transform = d3.zoomTransform(svg.node());
+      const k = transform.k;
+      const tx = cx - nodeObj.x * k;
+      const ty = cy - nodeObj.y * k;
+      svg.transition()
+        .duration(450)
+        .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+    }
+
+    function highlightConnectionsFor(selectedNode) {
+      if (!nodeSel || nodeSel.empty()) return;
+
+      if (!selectedNode) {
+        nodeSel.selectAll("circle")
+          .style("opacity", null)
+          .attr("stroke", (d) => d.is_archetype ? "#fdcb6e" : "#0d0d0d")
+          .attr("stroke-width", (d) => d.is_archetype ? "1.8px" : "1.2px")
+          .style("stroke-dasharray", (d) => d.is_archetype ? "3, 2.5" : "none");
+        nodeSel.selectAll("text")
+          .style("opacity", null);
+        if (linkSel && !linkSel.empty()) {
+          linkSel.style("opacity", null);
+        }
+        updateLabelVisibility();
+        return;
+      }
+
+      const connectedIds = new Set([selectedNode.id]);
+      const rawItem = RAW[selectedNode.id];
+      if (rawItem && Array.isArray(rawItem.connections)) {
+        rawItem.connections.forEach((conn) => {
+          const targetTerm = conn.term.trim().toLowerCase();
+          const targets = nodesByTerm.get(targetTerm) || [];
+          targets.forEach((targetNode) => {
+            connectedIds.add(targetNode.id);
+          });
+        });
+      }
+
+      nodeSel.each(function (d) {
+        const isConnected = connectedIds.has(d.id);
+        const isSelf = d.id === selectedNode.id;
+        const g = d3.select(this);
+        g.select("circle")
+          .style("opacity", isConnected ? 1.0 : 0.15)
+          .attr("stroke", isSelf ? "#fdcb6e" : (isConnected ? "#dfe6e9" : (d.is_archetype ? "#fdcb6e" : "#0d0d0d")))
+          .attr("stroke-width", isSelf ? "3px" : (isConnected ? "2px" : (d.is_archetype ? "1.8px" : "1.2px")))
+          .style("stroke-dasharray", (d.is_archetype && !isSelf && !isConnected) ? "3, 2.5" : "none");
+        g.select("text")
+          .style("opacity", isConnected ? 1.0 : 0.05);
+      });
+
+      if (linkSel && !linkSel.empty()) {
+        linkSel.style("opacity", (e) => {
+          const s = typeof e.source === "object" ? e.source.id : e.source;
+          const t = typeof e.target === "object" ? e.target.id : e.target;
+          const isConnected = (s === selectedNode.id || t === selectedNode.id);
+          if (isConnected) {
+            return e.isSemantic ? 1.0 : 0.4;
+          }
+          return 0.03;
+        });
+      }
+    }
+
+    function selectNode(nodeObj) {
+      if (!nodeObj) {
+        clearSelection();
+        return;
+      }
+      ui.selectedId = nodeObj.id;
+      renderSpotlight(RAW[nodeObj.id], nodeObj);
+      highlightConnectionsFor(nodeObj);
+      centerCameraOnNode(nodeObj);
+    }
+
+    function clearSelection() {
+      ui.selectedId = null;
+      highlightConnectionsFor(null);
+    }
+
+    function renderSpotlight(d, nodeObj = null) {
+      if (!d) return;
+
+      if (!nodeObj) {
+        const list = nodesByTerm.get(d.term.trim().toLowerCase()) || [];
+        if (list.length > 0) {
+          nodeObj = list[0];
+        }
+      }
+
       document.getElementById("spot-term").textContent = d.term || "";
       const origin = d.origin != null && d.origin !== "" ? d.origin : "English";
       const meta = document.getElementById("spot-meta");
@@ -1144,6 +1356,47 @@ def main() -> None:
         escapeHtml(d.pleasantness || "—") +
         "</dd>";
       document.getElementById("spot-desc").textContent = d.description || "";
+
+      const connContainer = document.getElementById("spot-connections-container");
+      const connDiv = document.getElementById("spot-connections");
+      if (connContainer && connDiv) {
+        connDiv.innerHTML = "";
+        if (Array.isArray(d.connections) && d.connections.length > 0) {
+          connContainer.style.display = "block";
+          d.connections.forEach((conn) => {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "conn-chip " + (conn.relation || "adjacent");
+
+            const termSpan = document.createElement("span");
+            termSpan.textContent = conn.term;
+
+            const relSpan = document.createElement("span");
+            relSpan.className = "relation-tag";
+            relSpan.textContent = conn.relation ? conn.relation.replace("_", " ") : "adjacent";
+
+            chip.appendChild(termSpan);
+            chip.appendChild(relSpan);
+
+            if (conn.notes) {
+              chip.title = conn.notes;
+            }
+
+            chip.addEventListener("click", (ev) => {
+              ev.stopPropagation();
+              const targets = nodesByTerm.get(conn.term.trim().toLowerCase()) || [];
+              if (targets.length > 0) {
+                const visible = targets.filter((n) => catVisible(n) && normVisible(n));
+                const targetNode = visible.length > 0 ? visible[0] : targets[0];
+                selectNode(targetNode);
+              }
+            });
+            connDiv.appendChild(chip);
+          });
+        } else {
+          connContainer.style.display = "none";
+        }
+      }
     }
 
     function refreshSpotlight() {

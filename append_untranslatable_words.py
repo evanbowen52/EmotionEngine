@@ -25,7 +25,7 @@ NEW = [
     {
         "term": "Jayus",
         "origin": "Indonesian",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -43,7 +43,7 @@ NEW = [
     {
         "term": "Tartle",
         "origin": "Scots",
-        "category": "Shame/Confusion",
+        "category": "Shame and Guilt",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "Low",
@@ -61,7 +61,7 @@ NEW = [
     {
         "term": "Torschlusspanik",
         "origin": "German",
-        "category": "Fear/Anxiety",
+        "category": "Fear and Panic",
         "intensity": "Intense",
         "energy": "High",
         "pleasantness": "Low",
@@ -88,7 +88,7 @@ NEW = [
     {
         "term": "Duende",
         "origin": "Spanish",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "High",
@@ -97,7 +97,7 @@ NEW = [
     {
         "term": "Backpfeifengesicht",
         "origin": "German",
-        "category": "Anger/Boundaries",
+        "category": "Anger, Apathy, and Hatred",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "Low",
@@ -115,7 +115,7 @@ NEW = [
     {
         "term": "Gigil",
         "origin": "Filipino",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Soft",
         "energy": "Medium",
         "pleasantness": "High",
@@ -124,7 +124,7 @@ NEW = [
     {
         "term": "Forelsket",
         "origin": "Norwegian",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Medium",
         "energy": "High",
         "pleasantness": "Very High",
@@ -133,7 +133,7 @@ NEW = [
     {
         "term": "Retrouvailles",
         "origin": "French",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -169,7 +169,7 @@ NEW = [
     {
         "term": "Apaixonar",
         "origin": "Portuguese",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Soft",
         "energy": "Medium",
         "pleasantness": "High",
@@ -187,7 +187,7 @@ NEW = [
     {
         "term": "Lagom",
         "origin": "Swedish",
-        "category": "Happiness/Contentment",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "Neutral/High",
@@ -196,7 +196,7 @@ NEW = [
     {
         "term": "Flâner",
         "origin": "French",
-        "category": "Peace/Solitude",
+        "category": "Peace and Solitude",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -205,7 +205,7 @@ NEW = [
     {
         "term": "Meraki",
         "origin": "Greek",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "High",
@@ -214,7 +214,7 @@ NEW = [
     {
         "term": "Komorebi",
         "origin": "Japanese",
-        "category": "Peace/Solitude",
+        "category": "Peace and Solitude",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -223,7 +223,7 @@ NEW = [
     {
         "term": "Pena ajena",
         "origin": "Spanish",
-        "category": "Shame/Confusion",
+        "category": "Shame and Guilt",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "Low",
@@ -232,7 +232,7 @@ NEW = [
     {
         "term": "Boketto",
         "origin": "Japanese",
-        "category": "Apathy/Depression",
+        "category": "Depression and Suicidal Urges",
         "intensity": "Soft",
         "energy": "Very Low",
         "pleasantness": "Neutral",
@@ -250,7 +250,7 @@ NEW = [
     {
         "term": "Slampadato",
         "origin": "Italian",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Medium",
         "energy": "Low",
         "pleasantness": "Neutral",
@@ -268,7 +268,7 @@ NEW = [
     {
         "term": "Linslus",
         "origin": "Swedish",
-        "category": "Social Comparison",
+        "category": "Jealousy and Envy",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "Neutral",
@@ -277,7 +277,7 @@ NEW = [
     {
         "term": "Hè hè",
         "origin": "Dutch",
-        "category": "Happiness/Contentment",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -316,7 +316,7 @@ NEW2 = [
     {
         "term": "Sisu",
         "origin": "Finnish",
-        "category": "Fear/Anxiety",
+        "category": "Fear and Panic",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "Neutral",
@@ -334,7 +334,7 @@ NEW2 = [
     {
         "term": "Voorpret",
         "origin": "Dutch",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "High",
@@ -352,7 +352,7 @@ NEW2 = [
     {
         "term": "Fremdscham",
         "origin": "German",
-        "category": "Shame/Confusion",
+        "category": "Shame and Guilt",
         "intensity": "Medium",
         "energy": "Medium",
         "pleasantness": "Low",
@@ -361,7 +361,7 @@ NEW2 = [
     {
         "term": "Gökotta",
         "origin": "Swedish",
-        "category": "Peace/Solitude",
+        "category": "Peace and Solitude",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -397,7 +397,7 @@ NEW2 = [
     {
         "term": "Zhaghzhagh",
         "origin": "Persian (Farsi)",
-        "category": "Fear/Anxiety",
+        "category": "Fear and Panic",
         "intensity": "Soft",
         "energy": "High",
         "pleasantness": "Low",
@@ -415,7 +415,7 @@ NEW2 = [
     {
         "term": "Yugen",
         "origin": "Japanese",
-        "category": "Happiness/Joy",
+        "category": "Happiness, Contentment, and Joy",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -424,7 +424,7 @@ NEW2 = [
     {
         "term": "Shinrin-yoku",
         "origin": "Japanese",
-        "category": "Peace/Solitude",
+        "category": "Peace and Solitude",
         "intensity": "Soft",
         "energy": "Low",
         "pleasantness": "High",
@@ -451,7 +451,7 @@ NEW2 = [
     {
         "term": "Mångata",
         "origin": "Swedish",
-        "category": "Peace/Solitude",
+        "category": "Peace and Solitude",
         "intensity": "Soft",
         "energy": "Very Low",
         "pleasantness": "High",
