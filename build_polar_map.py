@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 JSON_PATH = ROOT / "emotions.json"
-OUT_PATH = ROOT / "emotion-polar-map.html"
+OUT_PATH = ROOT / "index.html"
 
 
 def main() -> None:
@@ -390,6 +390,56 @@ def main() -> None:
       width: 100%;
     }
 
+    /* Info Modal Styles */
+    #info-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(15, 15, 18, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+    #info-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #info-modal {
+      background: #1e1e20;
+      border: 1px solid #444;
+      border-radius: 12px;
+      width: min(600px, 90vw);
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px 30px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+      color: #ddd;
+    }
+    #info-modal h1 { margin: 0 0 16px 0; font-size: 20px; color: #fdcb6e; font-weight: 600; }
+    #info-modal h2 { margin: 20px 0 8px 0; font-size: 15px; color: #eee; border-bottom: 1px solid #333; padding-bottom: 6px; }
+    #info-modal p { margin: 0 0 12px 0; line-height: 1.5; font-size: 13px; }
+    #info-modal ul { margin: 0 0 16px 0; padding-left: 20px; line-height: 1.5; font-size: 13px; color: #ccc; }
+    #info-modal li { margin-bottom: 6px; }
+    #info-modal strong { color: #fff; }
+    .close-modal-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      margin-top: 24px;
+      background: #fdcb6e;
+      color: #111;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .close-modal-btn:hover { background: #ffeaa7; }
+
     /* Somatic Wizard Styles */
     #wizard-panel {
       position: fixed;
@@ -589,7 +639,32 @@ def main() -> None:
     <button type="button" id="zoom-out">Zoom −</button>
     <button type="button" id="reset-view">Reset view</button>
     <button type="button" id="wizard-toggle-btn" style="background:#fdcb6e;color:#1e1e1e;border-color:#fdcb6e;font-weight:600;display:inline-flex;align-items:center;gap:4px;">✨ Somatic Wizard</button>
+    <button type="button" id="info-toggle-btn">ℹ️ About</button>
     <span id="hint">Wheel zoom · drag background to pan · drag nodes · click a category chip to show/hide · filters →</span>
+  </div>
+
+  <div id="info-overlay" class="hidden">
+    <div id="info-modal">
+      <h1>🌀 Welcome to the Emotion Engine</h1>
+      <p>This is an interactive, multi-disciplinary map of <strong>1,878 emotional states</strong>, arranged radially by pleasantness (angle) and intensity (distance).</p>
+      
+      <h2>🧭 Two Ways to Explore</h2>
+      <ul>
+        <li><strong>Philosophical Exploration:</strong> Leave the "English terms only" box <strong>unchecked</strong> (in Map Filters) to explore the entire global landscape. This reveals over 1,400 untranslatable concepts from world cultures, depth psychology, and mythology. Use the <em>Orbit</em> tool in the sidebar to take a guided celestial tour.</li>
+        <li><strong>"Name It to Tame It" (Grounding Tool):</strong> Check the <strong>"English terms only"</strong> box to clear the map into a practical, standard emotion wheel. Click the <strong>✨ Somatic Wizard</strong> in the top toolbar to track your physical body tension and map it to a core human need. It will automatically isolate your exact emotional state.</li>
+      </ul>
+
+      <h2>📚 Sources & Attributions</h2>
+      <p>This tool synthesizes foundational concepts from several major schools of psychological thought:</p>
+      <ul>
+        <li><strong>The Positive Lexicography Project</strong> (Dr. Tim Lomas & hifisamurai): Provided the vast majority of the 1,400+ cross-cultural, untranslatable, and nuanced positive emotional terms that populate the global view.</li>
+        <li><strong>Atlas of the Heart</strong> (Dr. Brené Brown): Provided the definitive semantic mapping and relational definitions for complex English emotions (e.g., distinguishing Shame vs. Guilt, Empathy vs. Sympathy, Belonging vs. Fitting In).</li>
+        <li><strong>Analytical Psychology</strong> (Carl Jung): Inspired the constellation nodes mapping deep psychic structures (The Self, The Shadow, Persona) and the archetypes underpinning world mythology.</li>
+        <li><strong>The Original Feeling Wheel</strong> (Dr. Gloria Willcox & Dr. Robert Plutchik): Provided the foundational concept of arranging emotions radially by intensity and primary valence sectors, which inspired the geometric layout of this engine.</li>
+      </ul>
+      
+      <button class="close-modal-btn" id="close-info-btn">Start Exploring</button>
+    </div>
   </div>
 
   <div id="wizard-panel" class="collapsed">
@@ -2160,6 +2235,35 @@ def main() -> None:
         if (nodeSel) nodeSel.classed("orbit-focus", false);
       }
     });
+
+    // Info Modal Logic
+    const infoOverlay = document.getElementById("info-overlay");
+    const infoBtn = document.getElementById("info-toggle-btn");
+    const closeInfoBtn = document.getElementById("close-info-btn");
+
+    function openInfo() {
+      infoOverlay.classList.remove("hidden");
+    }
+    function closeInfo() {
+      infoOverlay.classList.add("hidden");
+      try { localStorage.setItem("emotionPolar.hasSeenIntro", "1"); } catch(e){}
+    }
+
+    infoBtn.addEventListener("click", openInfo);
+    closeInfoBtn.addEventListener("click", closeInfo);
+    infoOverlay.addEventListener("click", (e) => {
+      if (e.target === infoOverlay) closeInfo();
+    });
+
+    try {
+      if (!localStorage.getItem("emotionPolar.hasSeenIntro")) {
+        openInfo();
+      } else {
+        infoOverlay.classList.add("hidden");
+      }
+    } catch(e) {
+      infoOverlay.classList.add("hidden");
+    }
 
     refreshSpotlight();
     syncPanelToggleButtons();
