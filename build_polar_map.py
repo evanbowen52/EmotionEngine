@@ -688,6 +688,15 @@ def main() -> None:
       englishOnly: false,
     };
 
+    const wizardState = {
+      active: false,
+      step: 1,
+      quadrant: null,
+      bodyArea: null,
+      need: null,
+      hoveredNodeId: null
+    };
+
     function scorePleasantness(s) {
       if (!s) return 0;
       const t = String(s).toLowerCase();
@@ -1630,14 +1639,16 @@ def main() -> None:
       const cat = d.category;
       const isSoft = String(d.intensity).toLowerCase().includes("soft");
       
-      // Check Step 1
+      // 1. STRICT QUADRANT FILTER
       if (wizardState.quadrant) {
         let quadMatch = false;
-        if (wizardState.quadrant === 'TR' && ep > 0 && ee > 0 && cat === "Happiness, Contentment, and Joy") quadMatch = true;
-        if (wizardState.quadrant === 'BR' && ep > 0 && ee <= 0 && (cat === "Peace and Solitude" || cat === "Social Connection")) quadMatch = true;
-        if (wizardState.quadrant === 'TL' && ep < 0 && ee > 0 && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Anger, Apathy, and Hatred")) quadMatch = true;
-        if (wizardState.quadrant === 'BL' && ep < 0 && ee <= 0 && (cat === "Sadness and Grief" || cat === "Depression and Suicidal Urges" || cat === "Shame and Guilt")) quadMatch = true;
+        if (wizardState.quadrant === 'TR' && ep >= 0 && ee >= 0 && (cat === "Happiness, Contentment, and Joy" || cat === "Social Connection" || cat === "Peace and Solitude" || cat === "Nonspecific")) quadMatch = true;
+        if (wizardState.quadrant === 'BR' && ep >= 0 && ee <= 0 && (cat === "Peace and Solitude" || cat === "Social Connection" || cat === "Happiness, Contentment, and Joy" || cat === "Nonspecific")) quadMatch = true;
+        if (wizardState.quadrant === 'TL' && ep <= 0 && ee >= 0 && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Anger, Apathy, and Hatred" || cat === "Jealousy and Envy" || cat === "Confusion")) quadMatch = true;
+        if (wizardState.quadrant === 'BL' && ep <= 0 && ee <= 0 && (cat === "Sadness and Grief" || cat === "Depression and Suicidal Urges" || cat === "Shame and Guilt" || cat === "Anger, Apathy, and Hatred" || cat === "Avoidance")) quadMatch = true;
         if (wizardState.quadrant === 'C' && (ep === 0 || isSoft || cat === "Confusion" || cat === "Nonspecific" || cat === "Avoidance")) quadMatch = true;
+        
+        // Instant elimination if the base valence/energy quadrant is wrong.
         if (!quadMatch) return false;
       }
       
@@ -1649,7 +1660,7 @@ def main() -> None:
         if (wizardState.bodyArea === 'chest' && (cat === "Social Connection" || cat === "Happiness, Contentment, and Joy" || cat === "Sadness and Grief" || cat === "Fear and Panic")) bodyMatch = true;
         if (wizardState.bodyArea === 'gut' && (cat === "Fear and Panic" || cat === "Jealousy and Envy" || cat === "Anger, Apathy, and Hatred")) bodyMatch = true;
         if (wizardState.bodyArea === 'limbs' && (cat === "Anger, Apathy, and Hatred" || cat === "Anxiety" || cat === "Depression and Suicidal Urges")) bodyMatch = true;
-        if (wizardState.bodyArea === 'whole' && (cat === "Peace and Solitude" || cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) bodyMatch = true;
+        if (wizardState.bodyArea === 'whole' && (cat === "Peace and Solitude" || cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges" || cat === "Nonspecific")) bodyMatch = true;
         if (!bodyMatch) return false;
       }
       
@@ -1657,11 +1668,11 @@ def main() -> None:
       if (wizardState.step >= 3 && wizardState.need) {
         let needMatch = false;
         if (wizardState.need === 'S' && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Peace and Solitude")) needMatch = true;
-        if (wizardState.need === 'A' && (cat === "Anger, Apathy, and Hatred" || (cat === "Happiness, Contentment, and Joy" && d.term.toLowerCase() === "pride"))) needMatch = true;
-        if (wizardState.need === 'P' && (cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) needMatch = true;
-        if (wizardState.need === 'I' && (cat === "Shame and Guilt" || cat === "Confusion" || d.term.toLowerCase() === "the self")) needMatch = true;
-        if (wizardState.need === 'E' && (cat === "Jealousy and Envy" || cat === "Happiness, Contentment, and Joy")) needMatch = true;
-        if (wizardState.need === 'N' && (cat === "Social Connection" || cat === "Sadness and Grief")) needMatch = true;
+        if (wizardState.need === 'A' && (cat === "Anger, Apathy, and Hatred" || cat === "Happiness, Contentment, and Joy" || cat === "Confidence")) needMatch = true;
+        if (wizardState.need === 'P' && (cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges" || cat === "Nonspecific")) needMatch = true;
+        if (wizardState.need === 'I' && (cat === "Shame and Guilt" || cat === "Confusion" || d.term.toLowerCase() === "the self" || cat === "Social Connection")) needMatch = true;
+        if (wizardState.need === 'E' && (cat === "Jealousy and Envy" || cat === "Happiness, Contentment, and Joy" || cat === "Anger, Apathy, and Hatred")) needMatch = true;
+        if (wizardState.need === 'N' && (cat === "Social Connection" || cat === "Sadness and Grief" || cat === "Peace and Solitude")) needMatch = true;
         if (!needMatch) return false;
       }
       
@@ -1680,47 +1691,47 @@ def main() -> None:
     function calculateWizardScore(d) {
       let score = 0;
       
-      // 1. Quadrant Score
+      const ep = scorePleasantness(d.pleasantness);
+      const ee = scoreEnergy(d.energy);
+      const cat = d.category;
+      const isSoft = String(d.intensity).toLowerCase().includes("soft");
+      
+      // 1. STRICT QUADRANT FILTER (Gatekeeper)
       if (wizardState.quadrant) {
-        const ep = scorePleasantness(d.pleasantness);
-        const ee = scoreEnergy(d.energy);
-        const cat = d.category;
-        const isSoft = String(d.intensity).toLowerCase().includes("soft");
-        
         let match = false;
-        if (wizardState.quadrant === 'TR' && ep > 0 && ee > 0 && cat === "Happiness, Contentment, and Joy") match = true;
-        if (wizardState.quadrant === 'BR' && ep > 0 && ee <= 0 && (cat === "Peace and Solitude" || cat === "Social Connection")) match = true;
-        if (wizardState.quadrant === 'TL' && ep < 0 && ee > 0 && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Anger, Apathy, and Hatred")) match = true;
-        if (wizardState.quadrant === 'BL' && ep < 0 && ee <= 0 && (cat === "Sadness and Grief" || cat === "Depression and Suicidal Urges" || cat === "Shame and Guilt")) match = true;
+        if (wizardState.quadrant === 'TR' && ep >= 0 && ee >= 0 && (cat === "Happiness, Contentment, and Joy" || cat === "Social Connection" || cat === "Peace and Solitude" || cat === "Nonspecific")) match = true;
+        if (wizardState.quadrant === 'BR' && ep >= 0 && ee <= 0 && (cat === "Peace and Solitude" || cat === "Social Connection" || cat === "Happiness, Contentment, and Joy" || cat === "Nonspecific")) match = true;
+        if (wizardState.quadrant === 'TL' && ep <= 0 && ee >= 0 && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Anger, Apathy, and Hatred" || cat === "Jealousy and Envy" || cat === "Confusion")) match = true;
+        if (wizardState.quadrant === 'BL' && ep <= 0 && ee <= 0 && (cat === "Sadness and Grief" || cat === "Depression and Suicidal Urges" || cat === "Shame and Guilt" || cat === "Anger, Apathy, and Hatred" || cat === "Avoidance")) match = true;
         if (wizardState.quadrant === 'C' && (ep === 0 || isSoft || cat === "Confusion" || cat === "Nonspecific" || cat === "Avoidance")) match = true;
         
-        if (match) score += 5;
+        // If it doesn't match the fundamental valence/energy quadrant, eliminate it completely.
+        if (!match) return -1;
+        score += 5;
       }
       
-      // 2. Somatic Score
+      // 2. Somatic Score (Additive Refinement)
       if (wizardState.bodyArea) {
-        const cat = d.category;
         let match = false;
         if (wizardState.bodyArea === 'head' && (cat === "Confusion" || cat === "Anxiety" || cat === "Shame and Guilt")) match = true;
         if (wizardState.bodyArea === 'throat' && (cat === "Sadness and Grief" || cat === "Social Connection")) match = true;
         if (wizardState.bodyArea === 'chest' && (cat === "Social Connection" || cat === "Happiness, Contentment, and Joy" || cat === "Sadness and Grief" || cat === "Fear and Panic")) match = true;
         if (wizardState.bodyArea === 'gut' && (cat === "Fear and Panic" || cat === "Jealousy and Envy" || cat === "Anger, Apathy, and Hatred")) match = true;
         if (wizardState.bodyArea === 'limbs' && (cat === "Anger, Apathy, and Hatred" || cat === "Anxiety" || cat === "Depression and Suicidal Urges")) match = true;
-        if (wizardState.bodyArea === 'whole' && (cat === "Peace and Solitude" || cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) match = true;
+        if (wizardState.bodyArea === 'whole' && (cat === "Peace and Solitude" || cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges" || cat === "Nonspecific")) match = true;
         
         if (match) score += 3;
       }
       
-      // 3. Need Score
+      // 3. Need Score (Additive Refinement)
       if (wizardState.need) {
-        const cat = d.category;
         let match = false;
         if (wizardState.need === 'S' && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Peace and Solitude")) match = true;
-        if (wizardState.need === 'A' && (cat === "Anger, Apathy, and Hatred" || (cat === "Happiness, Contentment, and Joy" && d.term.toLowerCase() === "pride"))) match = true;
-        if (wizardState.need === 'P' && (cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) match = true;
-        if (wizardState.need === 'I' && (cat === "Shame and Guilt" || cat === "Confusion" || d.term.toLowerCase() === "the self")) match = true;
-        if (wizardState.need === 'E' && (cat === "Jealousy and Envy" || cat === "Happiness, Contentment, and Joy")) match = true;
-        if (wizardState.need === 'N' && (cat === "Social Connection" || cat === "Sadness and Grief")) match = true;
+        if (wizardState.need === 'A' && (cat === "Anger, Apathy, and Hatred" || cat === "Happiness, Contentment, and Joy" || cat === "Confidence")) match = true;
+        if (wizardState.need === 'P' && (cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges" || cat === "Nonspecific")) match = true;
+        if (wizardState.need === 'I' && (cat === "Shame and Guilt" || cat === "Confusion" || d.term.toLowerCase() === "the self" || cat === "Social Connection")) match = true;
+        if (wizardState.need === 'E' && (cat === "Jealousy and Envy" || cat === "Happiness, Contentment, and Joy" || cat === "Anger, Apathy, and Hatred")) match = true;
+        if (wizardState.need === 'N' && (cat === "Social Connection" || cat === "Sadness and Grief" || cat === "Peace and Solitude")) match = true;
         
         if (match) score += 4;
       }
@@ -1731,14 +1742,6 @@ def main() -> None:
     // ----------------------------------------------------
     // BIO-SOMATIC GRANULARITY WIZARD STATE & LOGIC
     // ----------------------------------------------------
-    const wizardState = {
-      active: false,
-      step: 1, // 1 to 4
-      quadrant: null, // 'TR', 'BR', 'TL', 'BL', 'C'
-      bodyArea: null, // 'head', 'throat', 'chest', 'gut', 'limbs', 'whole'
-      need: null,     // 'S', 'A', 'P', 'I', 'E', 'N'
-      hoveredNodeId: null
-    };
 
     function initWizard() {
       // Toggle button click listener
