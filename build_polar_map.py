@@ -389,6 +389,198 @@ def main() -> None:
     #spotlight .orbit-controls input[type="range"] {
       width: 100%;
     }
+
+    /* Somatic Wizard Styles */
+    #wizard-panel {
+      position: fixed;
+      left: 10px;
+      top: 54px;
+      z-index: 3;
+      width: min(320px, 45vw);
+      max-height: calc(100vh - 70px);
+      overflow-y: auto;
+      padding: 14px 16px;
+      background: rgba(26, 26, 28, 0.96);
+      border: 1px solid #444;
+      border-radius: 10px;
+      font-size: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    #wizard-panel.collapsed {
+      transform: translateX(-350px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .wiz-subtitle {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 12px;
+      line-height: 1.35;
+    }
+    .wiz-progress {
+      height: 4px;
+      background: #252528;
+      border-radius: 2px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .wiz-progress-bar {
+      height: 100%;
+      background: #fdcb6e;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .wiz-question {
+      font-size: 12px;
+      font-weight: 500;
+      color: #ddd;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .wiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .wiz-card {
+      background: #202022;
+      border: 1px solid #3d3d40;
+      border-radius: 8px;
+      padding: 8px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+    .wiz-card:hover {
+      background: #2a2a2e;
+      border-color: #5a5a60;
+    }
+    .wiz-card.selected {
+      background: rgba(253, 203, 110, 0.1);
+      border-color: #fdcb6e;
+    }
+    .wiz-card .emoji {
+      font-size: 16px;
+    }
+    .wiz-card .label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #eee;
+    }
+    .wiz-card .desc {
+      font-size: 8px;
+      color: #777;
+      line-height: 1.2;
+    }
+    .wiz-card.full-width {
+      grid-column: span 2;
+    }
+    .wiz-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .wiz-btn {
+      flex: 1;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #38383c;
+      color: #ddd;
+      border: 1px solid #555;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .wiz-btn:hover {
+      background: #48484e;
+    }
+    .wiz-btn.primary {
+      background: #fdcb6e;
+      color: #1a1a1c;
+      border-color: #fdcb6e;
+      font-weight: 600;
+    }
+    .wiz-btn.primary:hover {
+      background: #ffeaa7;
+    }
+    .wiz-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+    .wiz-list-item {
+      background: #202022;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .wiz-list-item:hover {
+      background: #2a2a2e;
+      border-color: #555;
+    }
+    .wiz-list-item.selected {
+      background: rgba(253, 203, 110, 0.08);
+      border-color: #fdcb6e;
+    }
+    .wiz-list-item .item-text {
+      font-weight: 500;
+      color: #eee;
+      font-size: 11px;
+    }
+    .wiz-list-item .item-sub {
+      font-size: 9px;
+      color: #888;
+    }
+    .wiz-results {
+      max-height: 180px;
+      overflow-y: auto;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 4px;
+      background: #141416;
+      margin-bottom: 12px;
+    }
+    .wiz-results-item {
+      padding: 5px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3px;
+      transition: background 0.2s;
+    }
+    .wiz-results-item:hover {
+      background: #222;
+    }
+    .wiz-results-item .term-name {
+      font-weight: 600;
+      color: #fdcb6e;
+      font-size: 11px;
+    }
+    .wiz-results-item .term-category {
+      font-size: 8px;
+      color: #888;
+      background: #1e1e20;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body>
@@ -396,7 +588,20 @@ def main() -> None:
     <button type="button" id="zoom-in">Zoom +</button>
     <button type="button" id="zoom-out">Zoom −</button>
     <button type="button" id="reset-view">Reset view</button>
+    <button type="button" id="wizard-toggle-btn" style="background:#fdcb6e;color:#1e1e1e;border-color:#fdcb6e;font-weight:600;display:inline-flex;align-items:center;gap:4px;">✨ Somatic Wizard</button>
     <span id="hint">Wheel zoom · drag background to pan · drag nodes · click a category chip to show/hide · filters →</span>
+  </div>
+
+  <div id="wizard-panel" class="collapsed">
+    <div class="panel-head" style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;">
+      <h2 class="wiz-title" style="margin:0;font-size:14px;font-weight:600;color:#fdcb6e;display:flex;align-items:center;gap:5px;">✨ Somatic Wizard</h2>
+      <button type="button" class="panel-toggle" id="wizard-close-btn" style="padding:3px 7px;font-size:10px;">Close</button>
+    </div>
+    <div class="wiz-subtitle">Track your somatic state and clarify your exact feelings.</div>
+    <div class="wiz-progress">
+      <div class="wiz-progress-bar" id="wiz-progress-bar"></div>
+    </div>
+    <div id="wiz-content"></div>
   </div>
 
   <aside id="controls">
@@ -1102,6 +1307,7 @@ def main() -> None:
       positionNodeLabels();
       refreshLegendCategoryStyles();
       syncOrbitAfterGraphChange();
+      applyHighlightsAndWizard();
     }
 
     function refreshEdgesVisibility() {
@@ -1206,6 +1412,7 @@ def main() -> None:
 
     syncSlidersFromUi();
     applyGraph();
+    initWizard();
 
     const zoom = d3
       .zoom()
@@ -1314,6 +1521,491 @@ def main() -> None:
       }
     }
 
+    // ----------------------------------------------------
+    // UNIFIED HIGHLIGHT & WIZARD RENDERING MANAGER
+    // ----------------------------------------------------
+    function applyHighlightsAndWizard() {
+      if (!nodeSel || nodeSel.empty()) return;
+
+      const selectedNode = ui.selectedId !== null ? nodes[ui.selectedId] : null;
+
+      // Case 1: Active selection on map takes precedence
+      if (selectedNode) {
+        highlightConnectionsFor(selectedNode);
+        return;
+      }
+
+      // Case 2: Wizard is active
+      if (wizardState.active) {
+        if (wizardState.step === 4) {
+          const contenders = new Set(getWizardContenders().map((d) => d.id));
+          const hoveredId = wizardState.hoveredNodeId;
+
+          nodeSel.each(function (d) {
+            const isContender = contenders.has(d.id);
+            const isHovered = d.id === hoveredId;
+            const g = d3.select(this);
+            
+            g.select("circle")
+              .style("opacity", isContender ? (hoveredId === null || isHovered ? 1.0 : 0.3) : 0.05)
+              .attr("stroke", isHovered ? "#fdcb6e" : (isContender ? "#fdcb6e" : "#0d0d0d"))
+              .attr("stroke-width", isHovered ? "3.5px" : (isContender ? "1.8px" : "1.2px"))
+              .style("stroke-dasharray", (d.is_archetype && !isHovered) ? "3, 2.5" : "none");
+
+            g.select("text")
+              .style("opacity", isContender ? (hoveredId === null || isHovered ? 1.0 : 0.3) : 0.02)
+              .style("font-weight", isHovered ? "bold" : "normal");
+          });
+
+          if (linkSel && !linkSel.empty()) {
+            linkSel.style("opacity", (e) => {
+              const s = typeof e.source === "object" ? e.source.id : e.source;
+              const t = typeof e.target === "object" ? e.target.id : e.target;
+              const sCont = contenders.has(s);
+              const tCont = contenders.has(t);
+              
+              if (hoveredId !== null) {
+                const sHov = s === hoveredId;
+                const tHov = t === hoveredId;
+                if ((sHov && tCont) || (tHov && sCont)) return e.isSemantic ? 1.0 : 0.4;
+                return 0.01;
+              }
+              
+              if (sCont && tCont) return e.isSemantic ? 0.8 : 0.2;
+              return 0.01;
+            });
+          }
+        } else {
+          // Steps 1, 2, or 3
+          nodeSel.each(function (d) {
+            const isMatch = isNodeWizardMatch(d);
+            const g = d3.select(this);
+
+            g.select("circle")
+              .style("opacity", isMatch ? 0.9 : 0.03)
+              .attr("stroke", d.is_archetype ? "#fdcb6e" : "#0d0d0d")
+              .attr("stroke-width", d.is_archetype ? "1.8px" : "1.2px")
+              .style("stroke-dasharray", d.is_archetype ? "3, 2.5" : "none");
+
+            g.select("text")
+              .style("opacity", isMatch ? labelOpacity(d) * 1.2 : 0.01);
+          });
+
+          if (linkSel && !linkSel.empty()) {
+            linkSel.style("opacity", (e) => {
+              const s = typeof e.source === "object" ? e.source.id : e.source;
+              const t = typeof e.target === "object" ? e.target.id : e.target;
+              const sMatch = isNodeWizardMatch(nodes[s]);
+              const tMatch = isNodeWizardMatch(nodes[t]);
+              if (sMatch && tMatch) {
+                return e.isSemantic ? 0.7 : 0.15;
+              }
+              return 0.01;
+            });
+          }
+        }
+        return;
+      }
+
+      // Case 3: Default (no active selection and no active wizard)
+      nodeSel.each(function (d) {
+        const g = d3.select(this);
+        g.select("circle")
+          .style("opacity", null)
+          .attr("stroke", d.is_archetype ? "#fdcb6e" : "#0d0d0d")
+          .attr("stroke-width", d.is_archetype ? "1.8px" : "1.2px")
+          .style("stroke-dasharray", d.is_archetype ? "3, 2.5" : "none");
+        g.select("text")
+          .style("opacity", (d) => labelOpacity(d));
+      });
+
+      if (linkSel && !linkSel.empty()) {
+        linkSel.style("opacity", null);
+      }
+    }
+
+    function isNodeWizardMatch(d) {
+      const ep = scorePleasantness(d.pleasantness);
+      const ee = scoreEnergy(d.energy);
+      const cat = d.category;
+      const isSoft = String(d.intensity).toLowerCase().includes("soft");
+      
+      // Check Step 1
+      if (wizardState.quadrant) {
+        let quadMatch = false;
+        if (wizardState.quadrant === 'TR' && ep > 0 && ee > 0 && cat === "Happiness, Contentment, and Joy") quadMatch = true;
+        if (wizardState.quadrant === 'BR' && ep > 0 && ee <= 0 && (cat === "Peace and Solitude" || cat === "Social Connection")) quadMatch = true;
+        if (wizardState.quadrant === 'TL' && ep < 0 && ee > 0 && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Anger, Apathy, and Hatred")) quadMatch = true;
+        if (wizardState.quadrant === 'BL' && ep < 0 && ee <= 0 && (cat === "Sadness and Grief" || cat === "Depression and Suicidal Urges" || cat === "Shame and Guilt")) quadMatch = true;
+        if (wizardState.quadrant === 'C' && (ep === 0 || isSoft || cat === "Confusion" || cat === "Nonspecific" || cat === "Avoidance")) quadMatch = true;
+        if (!quadMatch) return false;
+      }
+      
+      // Check Step 2
+      if (wizardState.step >= 2 && wizardState.bodyArea) {
+        let bodyMatch = false;
+        if (wizardState.bodyArea === 'head' && (cat === "Confusion" || cat === "Anxiety" || cat === "Shame and Guilt")) bodyMatch = true;
+        if (wizardState.bodyArea === 'throat' && (cat === "Sadness and Grief" || cat === "Social Connection")) bodyMatch = true;
+        if (wizardState.bodyArea === 'chest' && (cat === "Social Connection" || cat === "Happiness, Contentment, and Joy" || cat === "Sadness and Grief" || cat === "Fear and Panic")) bodyMatch = true;
+        if (wizardState.bodyArea === 'gut' && (cat === "Fear and Panic" || cat === "Jealousy and Envy" || cat === "Anger, Apathy, and Hatred")) bodyMatch = true;
+        if (wizardState.bodyArea === 'limbs' && (cat === "Anger, Apathy, and Hatred" || cat === "Anxiety" || cat === "Depression and Suicidal Urges")) bodyMatch = true;
+        if (wizardState.bodyArea === 'whole' && (cat === "Peace and Solitude" || cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) bodyMatch = true;
+        if (!bodyMatch) return false;
+      }
+      
+      // Check Step 3
+      if (wizardState.step >= 3 && wizardState.need) {
+        let needMatch = false;
+        if (wizardState.need === 'S' && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Peace and Solitude")) needMatch = true;
+        if (wizardState.need === 'A' && (cat === "Anger, Apathy, and Hatred" || (cat === "Happiness, Contentment, and Joy" && d.term.toLowerCase() === "pride"))) needMatch = true;
+        if (wizardState.need === 'P' && (cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) needMatch = true;
+        if (wizardState.need === 'I' && (cat === "Shame and Guilt" || cat === "Confusion" || d.term.toLowerCase() === "the self")) needMatch = true;
+        if (wizardState.need === 'E' && (cat === "Jealousy and Envy" || cat === "Happiness, Contentment, and Joy")) needMatch = true;
+        if (wizardState.need === 'N' && (cat === "Social Connection" || cat === "Sadness and Grief")) needMatch = true;
+        if (!needMatch) return false;
+      }
+      
+      return true;
+    }
+
+    function getWizardContenders() {
+      const vis = filteredNodes();
+      const scored = vis.map((d) => {
+        return { node: d, score: calculateWizardScore(d) };
+      });
+      scored.sort((a, b) => b.score - a.score || a.node.term.localeCompare(b.node.term));
+      return scored.slice(0, 8).map(x => x.node);
+    }
+
+    function calculateWizardScore(d) {
+      let score = 0;
+      
+      // 1. Quadrant Score
+      if (wizardState.quadrant) {
+        const ep = scorePleasantness(d.pleasantness);
+        const ee = scoreEnergy(d.energy);
+        const cat = d.category;
+        const isSoft = String(d.intensity).toLowerCase().includes("soft");
+        
+        let match = false;
+        if (wizardState.quadrant === 'TR' && ep > 0 && ee > 0 && cat === "Happiness, Contentment, and Joy") match = true;
+        if (wizardState.quadrant === 'BR' && ep > 0 && ee <= 0 && (cat === "Peace and Solitude" || cat === "Social Connection")) match = true;
+        if (wizardState.quadrant === 'TL' && ep < 0 && ee > 0 && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Anger, Apathy, and Hatred")) match = true;
+        if (wizardState.quadrant === 'BL' && ep < 0 && ee <= 0 && (cat === "Sadness and Grief" || cat === "Depression and Suicidal Urges" || cat === "Shame and Guilt")) match = true;
+        if (wizardState.quadrant === 'C' && (ep === 0 || isSoft || cat === "Confusion" || cat === "Nonspecific" || cat === "Avoidance")) match = true;
+        
+        if (match) score += 5;
+      }
+      
+      // 2. Somatic Score
+      if (wizardState.bodyArea) {
+        const cat = d.category;
+        let match = false;
+        if (wizardState.bodyArea === 'head' && (cat === "Confusion" || cat === "Anxiety" || cat === "Shame and Guilt")) match = true;
+        if (wizardState.bodyArea === 'throat' && (cat === "Sadness and Grief" || cat === "Social Connection")) match = true;
+        if (wizardState.bodyArea === 'chest' && (cat === "Social Connection" || cat === "Happiness, Contentment, and Joy" || cat === "Sadness and Grief" || cat === "Fear and Panic")) match = true;
+        if (wizardState.bodyArea === 'gut' && (cat === "Fear and Panic" || cat === "Jealousy and Envy" || cat === "Anger, Apathy, and Hatred")) match = true;
+        if (wizardState.bodyArea === 'limbs' && (cat === "Anger, Apathy, and Hatred" || cat === "Anxiety" || cat === "Depression and Suicidal Urges")) match = true;
+        if (wizardState.bodyArea === 'whole' && (cat === "Peace and Solitude" || cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) match = true;
+        
+        if (match) score += 3;
+      }
+      
+      // 3. Need Score
+      if (wizardState.need) {
+        const cat = d.category;
+        let match = false;
+        if (wizardState.need === 'S' && (cat === "Fear and Panic" || cat === "Anxiety" || cat === "Peace and Solitude")) match = true;
+        if (wizardState.need === 'A' && (cat === "Anger, Apathy, and Hatred" || (cat === "Happiness, Contentment, and Joy" && d.term.toLowerCase() === "pride"))) match = true;
+        if (wizardState.need === 'P' && (cat === "Happiness, Contentment, and Joy" || cat === "Depression and Suicidal Urges")) match = true;
+        if (wizardState.need === 'I' && (cat === "Shame and Guilt" || cat === "Confusion" || d.term.toLowerCase() === "the self")) match = true;
+        if (wizardState.need === 'E' && (cat === "Jealousy and Envy" || cat === "Happiness, Contentment, and Joy")) match = true;
+        if (wizardState.need === 'N' && (cat === "Social Connection" || cat === "Sadness and Grief")) match = true;
+        
+        if (match) score += 4;
+      }
+      
+      return score;
+    }
+
+    // ----------------------------------------------------
+    // BIO-SOMATIC GRANULARITY WIZARD STATE & LOGIC
+    // ----------------------------------------------------
+    const wizardState = {
+      active: false,
+      step: 1, // 1 to 4
+      quadrant: null, // 'TR', 'BR', 'TL', 'BL', 'C'
+      bodyArea: null, // 'head', 'throat', 'chest', 'gut', 'limbs', 'whole'
+      need: null,     // 'S', 'A', 'P', 'I', 'E', 'N'
+      hoveredNodeId: null
+    };
+
+    function initWizard() {
+      // Toggle button click listener
+      document.getElementById("wizard-toggle-btn").addEventListener("click", () => {
+        const wp = document.getElementById("wizard-panel");
+        const active = wp.classList.contains("collapsed");
+        if (active) {
+          wp.classList.remove("collapsed");
+          wizardState.active = true;
+          // When wizard starts, clear regular selection
+          clearSelection();
+          renderWizardStep();
+        } else {
+          closeWizard();
+        }
+      });
+
+      document.getElementById("wizard-close-btn").addEventListener("click", () => {
+        closeWizard();
+      });
+    }
+
+    function closeWizard() {
+      const wp = document.getElementById("wizard-panel");
+      wp.classList.add("collapsed");
+      wizardState.active = false;
+      wizardState.step = 1;
+      wizardState.quadrant = null;
+      wizardState.bodyArea = null;
+      wizardState.need = null;
+      wizardState.hoveredNodeId = null;
+      applyHighlightsAndWizard();
+    }
+
+    function renderWizardStep() {
+      const container = document.getElementById("wiz-content");
+      if (!container) return;
+
+      container.innerHTML = "";
+
+      // Update progress bar
+      const bar = document.getElementById("wiz-progress-bar");
+      const pct = ((wizardState.step - 1) / 3) * 100;
+      bar.style.width = pct + "%";
+
+      if (wizardState.step === 1) {
+        // Step 1: Valence-Energy Quadrants
+        const qDiv = document.createElement("div");
+        qDiv.innerHTML = `
+          <div class="wiz-question">1. How are you feeling physically and emotionally right now? Select the quadrant that matches your state:</div>
+          <div class="wiz-grid">
+            <div class="wiz-card" id="wiz-q-tr">
+              <span class="emoji">🌟</span>
+              <span class="label">Vibrant & Inspired</span>
+              <span class="desc">High Energy • Pleasant</span>
+            </div>
+            <div class="wiz-card" id="wiz-q-br">
+              <span class="emoji">🌸</span>
+              <span class="label">Serene & Grounded</span>
+              <span class="desc">Low Energy • Pleasant</span>
+            </div>
+            <div class="wiz-card" id="wiz-q-tl">
+              <span class="emoji">⚡</span>
+              <span class="label">Tense & Reactive</span>
+              <span class="desc">High Energy • Unpleasant</span>
+            </div>
+            <div class="wiz-card" id="wiz-q-bl">
+              <span class="emoji">🌊</span>
+              <span class="label">Heavy & Weary</span>
+              <span class="desc">Low Energy • Unpleasant</span>
+            </div>
+            <div class="wiz-card full-width" id="wiz-q-c">
+              <span class="emoji">🧘</span>
+              <span class="label">Quiet, Reflective, or Transitional</span>
+              <span class="desc">Neutral / Calm / Mindful State</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(qDiv);
+
+        // Bind clicks
+        const map = { TR: 'wiz-q-tr', BR: 'wiz-q-br', TL: 'wiz-q-tl', BL: 'wiz-q-bl', C: 'wiz-q-c' };
+        Object.entries(map).forEach(([q, id]) => {
+          document.getElementById(id).addEventListener("click", () => {
+            wizardState.quadrant = q;
+            wizardState.step = 2;
+            renderWizardStep();
+            applyHighlightsAndWizard();
+          });
+        });
+      }
+      else if (wizardState.step === 2) {
+        // Step 2: Body Tension Location
+        const qDiv = document.createElement("div");
+        qDiv.innerHTML = `
+          <div class="wiz-question">2. Notice any physical tightness, tingling, or energy. Where in your body is this feeling most active?</div>
+          <div class="wiz-list">
+            <div class="wiz-list-item" id="wiz-b-head">
+              <span class="item-text">🧠 Head, Face, or Jaw</span>
+              <span class="item-sub">Racing mind • Clenched jaw • Blushing</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-b-throat">
+              <span class="item-text">🗣️ Throat or Neck</span>
+              <span class="item-sub">Choked up • Difficulty speaking • Stiffness</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-b-chest">
+              <span class="item-text">🫁 Chest or Heart</span>
+              <span class="item-sub">Tightness • Racing pulse • Warm expansion</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-b-gut">
+              <span class="item-text">🌀 Stomach or Gut</span>
+              <span class="item-sub">Butterflies • Twisting knot • Sinking feeling</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-b-limbs">
+              <span class="item-text">👤 Shoulders, Arms, or Hands</span>
+              <span class="item-sub">Heavy shoulders • Clenched fists • Defensive weight</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-b-whole">
+              <span class="item-text">🌊 Whole Body / Systemic</span>
+              <span class="item-sub">Buzzing excitement • Systemic fatigue • Peaceful calm</span>
+            </div>
+          </div>
+          <div class="wiz-actions">
+            <button type="button" class="wiz-btn" id="wiz-back">Back</button>
+          </div>
+        `;
+        container.appendChild(qDiv);
+
+        // Bind clicks
+        const map = { head: 'wiz-b-head', throat: 'wiz-b-throat', chest: 'wiz-b-chest', gut: 'wiz-b-gut', limbs: 'wiz-b-limbs', whole: 'wiz-b-whole' };
+        Object.entries(map).forEach(([b, id]) => {
+          document.getElementById(id).addEventListener("click", () => {
+            wizardState.bodyArea = b;
+            wizardState.step = 3;
+            renderWizardStep();
+            applyHighlightsAndWizard();
+          });
+        });
+
+        document.getElementById("wiz-back").addEventListener("click", () => {
+          wizardState.step = 1;
+          wizardState.quadrant = null;
+          renderWizardStep();
+          applyHighlightsAndWizard();
+        });
+      }
+      else if (wizardState.step === 3) {
+        // Step 3: S.A.P.I.E.N. Needs model
+        const qDiv = document.createElement("div");
+        qDiv.innerHTML = `
+          <div class="wiz-question">3. All feelings are indicators of needs. Which of your fundamental human needs is speaking loudest right now?</div>
+          <div class="wiz-list">
+            <div class="wiz-list-item" id="wiz-n-s">
+              <span class="item-text">🛡️ Safety & Security</span>
+              <span class="item-sub">Protection • Predictability • Physical safety</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-n-a">
+              <span class="item-text">🔓 Autonomy & Agency</span>
+              <span class="item-sub">Choice • Free independence • Self-expression</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-n-p">
+              <span class="item-text">🎯 Purpose & Meaning</span>
+              <span class="item-sub">Contribution • Curious learning • Creative progress</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-n-i">
+              <span class="item-text">🎭 Identity & Authenticity</span>
+              <span class="item-sub">Self-worth • Alignment with values • Being real</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-n-e">
+              <span class="item-text">💎 Esteem & Status</span>
+              <span class="item-sub">Mutual respect • Social standing • Accomplishment</span>
+            </div>
+            <div class="wiz-list-item" id="wiz-n-n">
+              <span class="item-text">🤝 Nurture & Connection</span>
+              <span class="item-sub">Intimate belonging • Care • Warm community</span>
+            </div>
+          </div>
+          <div class="wiz-actions">
+            <button type="button" class="wiz-btn" id="wiz-back">Back</button>
+          </div>
+        `;
+        container.appendChild(qDiv);
+
+        // Bind clicks
+        const map = { S: 'wiz-n-s', A: 'wiz-n-a', P: 'wiz-n-p', I: 'wiz-n-i', E: 'wiz-n-e', N: 'wiz-n-n' };
+        Object.entries(map).forEach(([n, id]) => {
+          document.getElementById(id).addEventListener("click", () => {
+            wizardState.need = n;
+            wizardState.step = 4;
+            renderWizardStep();
+            applyHighlightsAndWizard();
+          });
+        });
+
+        document.getElementById("wiz-back").addEventListener("click", () => {
+          wizardState.step = 2;
+          wizardState.bodyArea = null;
+          renderWizardStep();
+          applyHighlightsAndWizard();
+        });
+      }
+      else if (wizardState.step === 4) {
+        // Step 4: Constellation Reveal
+        const contenders = getWizardContenders();
+
+        const qDiv = document.createElement("div");
+        qDiv.innerHTML = `
+          <div class="wiz-question" style="margin-bottom:6px;">4. We found a matching emotional constellation! Hover to track, click to log:</div>
+          <div class="wiz-results" id="wiz-res-list"></div>
+          <div class="wiz-actions">
+            <button type="button" class="wiz-btn primary" id="wiz-reset">Reset Wizard</button>
+            <button type="button" class="wiz-btn" id="wiz-back">Back</button>
+          </div>
+        `;
+        container.appendChild(qDiv);
+
+        const listDiv = document.getElementById("wiz-res-list");
+        if (contenders.length === 0) {
+          listDiv.innerHTML = '<div style="color:#777;padding:10px;text-align:center;">No matching entries in the active filtered view. Change min/max radius or category checkboxes, or reset the wizard.</div>';
+        } else {
+          contenders.forEach((n) => {
+            const item = document.createElement("div");
+            item.className = "wiz-results-item";
+            item.innerHTML = `
+              <span class="term-name">${escapeHtml(n.term)}</span>
+              <span class="term-category">${escapeHtml(n.category.split(',')[0].trim())}</span>
+            `;
+
+            // Hover effects on map
+            item.addEventListener("mouseenter", () => {
+              wizardState.hoveredNodeId = n.id;
+              applyHighlightsAndWizard();
+            });
+            item.addEventListener("mouseleave", () => {
+              wizardState.hoveredNodeId = null;
+              applyHighlightsAndWizard();
+            });
+
+            // Click log & select node
+            item.addEventListener("click", () => {
+              selectNode(n);
+              console.log(`[Biofeedback Log] Emotion Named: "${n.term}" | Somatic Area: "${wizardState.bodyArea}" | Core Need: "${wizardState.need}"`);
+            });
+
+            listDiv.appendChild(item);
+          });
+        }
+
+        document.getElementById("wiz-reset").addEventListener("click", () => {
+          wizardState.step = 1;
+          wizardState.quadrant = null;
+          wizardState.bodyArea = null;
+          wizardState.need = null;
+          wizardState.hoveredNodeId = null;
+          renderWizardStep();
+          applyHighlightsAndWizard();
+        });
+
+        document.getElementById("wiz-back").addEventListener("click", () => {
+          wizardState.step = 3;
+          wizardState.need = null;
+          renderWizardStep();
+          applyHighlightsAndWizard();
+        });
+      }
+    }
+
     function selectNode(nodeObj) {
       if (!nodeObj) {
         clearSelection();
@@ -1321,13 +2013,13 @@ def main() -> None:
       }
       ui.selectedId = nodeObj.id;
       renderSpotlight(RAW[nodeObj.id], nodeObj);
-      highlightConnectionsFor(nodeObj);
+      applyHighlightsAndWizard();
       centerCameraOnNode(nodeObj);
     }
 
     function clearSelection() {
       ui.selectedId = null;
-      highlightConnectionsFor(null);
+      applyHighlightsAndWizard();
     }
 
     function renderSpotlight(d, nodeObj = null) {

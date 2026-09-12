@@ -74,6 +74,14 @@ There are distinct visual families of nodes and lines rendered on the map.
 
 ## ⚙️ Interactive Features & UX Modes
 
+* **Bio-Somatic Granularity Wizard:**
+  A gamified, multi-stage guided exploration wizard designed to help users identify their exact feeling in real time. It guides users through three concentric questions:
+  1. **Valence-Energy Quadrant Selector:** Maps feelings onto our 2D coordinate grid (Vibrant, Serene, Tense, Heavy, or Calm/Mindful).
+  2. **Somatic Biofeedback (Body Mapping):** Prompts users to locate where the emotional tension is appearing in their physical body (Head, Throat, Chest, Stomach, Limbs, or Whole Body).
+  3. **Core Need Discovery (S.A.P.I.E.N. model):** Uses Nonviolent Communication (NVC) concepts to identify the underlying met/unmet need (Safety, Autonomy, Purpose, Identity, Esteem, or Nurture).
+  
+  The wizard then isolates the matching **celestial constellation** of final contender emotions on the map, dimming other nodes to 3%, and lets users hover over cards to highlight nodes and click to log their biofeedback.
+
 * **English Terms Only Toggle:** 
   Checking the **"English terms only"** checkbox in the sidebar hides the 1,400+ foreign, untranslatable, and coined terms. The remaining English nodes smoothly float together to form a highly familiar, standard **English Emotion Wheel**. Toggling it off expands the map into an international philosophical landscape.
 * **Click Highlight (Spotlight):** 
